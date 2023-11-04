@@ -5,7 +5,9 @@ import Link from "next/link";
 const Navbar = () => {
   return (
     <nav className="flex items-center justify-between bg-surface-secondary padding">
-      <span class="font-bold">CheckOff</span>
+      <Link href="/">
+        <span class="font-bold">CheckOff</span>
+      </Link>
       <div className="flex space-x-2">
         <Link href="/login">
           <Button intent="primary">Login</Button>
@@ -14,8 +16,6 @@ const Navbar = () => {
         <Link href="/create-account">
           <Button intent="secondary">Create Account</Button>
         </Link>
-        
-        
       </div>
     </nav>
   );
