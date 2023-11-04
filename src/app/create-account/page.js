@@ -6,6 +6,7 @@ import Link from "next/link";
 
 const CreateAccount = () => {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -19,7 +20,26 @@ const CreateAccount = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("api/register", {
+      // Check existing user
+      const resUserExists = await fetch("api/userExists", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const { user, message } = await resUserExists.json();
+
+      if (user) {
+        setLoading(false);
+        setError(message);
+        formRef.current.reset();
+        return;
+      }
+
+      // Register New User
+      const resRegister = await fetch("api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -27,16 +47,17 @@ const CreateAccount = () => {
         body: JSON.stringify({ email, password }),
       });
 
-      if (response.status === 200) {
+      if (resRegister.status === 200) {
         formRef.current.reset();
+        setError("");
         setLoading(false);
       } else {
         // Handle registration error
-        console.error("User registration failed");
         setLoading(false);
       }
     } catch (error) {
-      console.error("Error:", error);
+      setError("");
+
       setLoading(false);
     }
   };
@@ -73,10 +94,8 @@ const CreateAccount = () => {
             required
           />
 
-          <Button>
-{loading?'Loading':'Sign Up'}
-            
-          </Button>
+          <span>{error}</span>
+          <Button>{loading ? "Loading" : "Sign Up"}</Button>
         </form>
       </div>
     </div>

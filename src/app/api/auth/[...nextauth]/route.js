@@ -1,31 +1,47 @@
-import { users } from "@/app/helpers/data";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { connectMongoDB } from "../../../../../lib/mongodb";
+import User from "../../../../../models/user";
+import bcrypt from "bcryptjs";
 
 const authOptions = {
   providers: [
     CredentialsProvider({
-      name: "creds",
+      name: "credentials",
       credentials: {
         email: { label: "Email", placeholder: "Enter Email" },
         password: { label: "Password", placeholder: "Enter Password" },
       },
       async authorize(credentials) {
-        if (!credentials || !credentials.email || !credentials.password)
-          return null;
+        const { email, password } = credentials;
+        try {
+          await connectMongoDB();
+          const user = await User.findOne({ email });
 
-        const user = users.find((item) => item.email === credentials.email);
-        if(user?.password ===credentials.password){
-            return user
+          if (!user) {
+            return null;
+          }
+
+          const passwordMatch = await bcrypt.compare(password, user.password);
+
+          if (!passwordMatch) {
+            return null;
+          }
+
+          return user;
+        } catch (error) {
+          console.log(error);
         }
-        return null
-
       },
     }),
   ],
-
-
-  secret:process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt",
+  },
+  pages: {
+    signIn: "/login",
+  },
+  secret: process.env.NEXTAUTH_SECRET,
 
 };
 const handler = NextAuth(authOptions);
