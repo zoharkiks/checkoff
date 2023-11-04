@@ -1,19 +1,18 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import React, { useRef } from "react";
 import { Button } from "../components/Button";
 
 const Login = () => {
-
   const emailRef = useRef();
   const passwordRef = useRef();
-  
+
   return (
     <div className="padding">
       <div className="flex">
         <Link href="/">
-          <span class="font-bold">CheckOff</span>
+          <span className="font-bold">CheckOff</span>
         </Link>
       </div>
       <div className="grid gap-8 place-items-center ">
@@ -29,19 +28,17 @@ const Login = () => {
               placeholder="name@company.com"
               type="email"
               name=""
-              id=""
               required
             />
 
-<input
-            ref={passwordRef}
-            className="border"
-            placeholder="Enter Your Password"
-            type="password"
-            name=""
-            id=""
-            required
-          />
+            <input
+              ref={passwordRef}
+              className="border"
+              placeholder="Enter Your Password"
+              type="password"
+              name=""
+              required
+            />
             <Button>Login</Button>
           </div>
         </form>

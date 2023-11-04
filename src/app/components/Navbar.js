@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <nav className="flex items-center justify-between bg-surface-secondary padding">
       <Link href="/">
-        <span class="font-bold">CheckOff</span>
+        <span className="font-bold">CheckOff</span>
       </Link>
       <div className="flex space-x-2">
         <Link href="/login">
