@@ -10,8 +10,6 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
- 
-
   const router = useRouter();
 
   const emailRef = useRef();
@@ -22,7 +20,9 @@ const Login = () => {
     e.preventDefault();
     const email = emailRef.current?.value;
     const password = passwordRef.current?.value;
+    setLoading(true);
     try {
+      setError("");
       const res = await signIn("credentials", {
         email,
         password,
@@ -32,12 +32,18 @@ const Login = () => {
       if (res.error) {
         setError("Invalid Credentials");
         formRef?.current.reset();
+        setLoading(false);
+
         return;
       }
+      setError("");
 
       router.replace("dashboard");
     } catch (error) {
+      setError("");
+
       formRef?.current.reset();
+      setLoading(false);
     }
   };
 
@@ -75,7 +81,7 @@ const Login = () => {
               required
             />
             {error ? <span>{error}</span> : null}
-            <Button>Login</Button>
+            <Button>{loading ? "Loading" : "Log In"}</Button>
           </div>
         </form>
       </div>

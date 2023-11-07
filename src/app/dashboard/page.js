@@ -7,17 +7,10 @@ import CreateNotes from "../components/CreateNotes";
 import { useAddNotesStore, useUserStore } from "../store";
 
 const Dashboard = () => {
-  const { session, data } = useSession();
-
   // Accessing State
   const [isOpen, setIsOpen] = useAddNotesStore((state) => [
     state.isOpen,
     state.setIsOpen,
-  ]);
-
-  const [username, setUsername] = useUserStore((state) => [
-    state.username,
-    state.setUsername,
   ]);
 
   return (
@@ -25,14 +18,13 @@ const Dashboard = () => {
       {isOpen && <CreateNotes />}
 
       <div className="flex items-center justify-center space-x-4">
-        <span>Welcome {username}</span>
+        <span>Welcome Test Users</span>
 
-        <Button onClick={() => signOut()}>Log Out</Button>
+        <Button onClick={signOut}>Log Out</Button>
 
         <Button onClick={() => setIsOpen(true)}>+</Button>
       </div>
-
-          </div>
+    </div>
   );
 };
 

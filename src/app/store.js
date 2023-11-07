@@ -6,6 +6,7 @@ export const useAddNotesStore = create((set) => ({
 }));
 
 export const useUserStore = create((set) => ({
+  id:'',
   username: "",
   setUsername: (username) => set({ username }),
 }));
