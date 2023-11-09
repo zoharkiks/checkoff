@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import {connectPrisma } from "../../../../lib/mongodb";
 import bcrypt from "bcryptjs";
 import prisma from "../../../../prisma";
+import { connectPrisma } from "@/app/utils";
 
 export const POST = async (req) => {
   try {
@@ -10,19 +10,22 @@ export const POST = async (req) => {
 
 
     await connectPrisma();
-    await prisma.user.create({
+    const user = await prisma.users.create({
       data: {
         email: email,
         password: hashedPassword,
       },
     });
 
-    return NextResponse.json({ message: "User Registered" }, { status: "200" });
+    return NextResponse.json({ message: "User Registered",user }, { status: "200" });
   } catch (error) {
     console.log(error);
     return NextResponse.json(
       { message: "An error occurred" },
       { status: "500" }
     );
+  }
+  finally{
+    await prisma.$disconnect()
   }
 };

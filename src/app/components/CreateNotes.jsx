@@ -3,9 +3,13 @@
 import React, { useRef, useState } from "react";
 import { Button } from "./Button";
 import { useAddNotesStore } from "../store";
+import { useSession } from "next-auth/react";
 
 const CreateNotes = () => {
   const [setIsOpen] = useAddNotesStore((state) => [state.setIsOpen]);
+
+  const {data} =useSession()
+
 
   const taskNameRef = useRef();
   const taskDescriptionRef = useRef();
@@ -16,15 +20,16 @@ const CreateNotes = () => {
 
     const taskName = taskNameRef?.current?.value;
     const taskDescription = taskDescriptionRef?.current?.value
+    const userId = data?.user?.id
     
 
     try {
-      const resCreateNote = await fetch("api/add-note", {
+      const resCreateNote = await fetch("api/notes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },  
-        body: JSON.stringify({ taskName, taskDescription }),
+        body: JSON.stringify({ taskName, taskDescription,userId }),
       });
 
       if(resCreateNote.status===200){
@@ -39,7 +44,7 @@ const CreateNotes = () => {
 
   return (
     <div className="fixed top-0 left-0 z-10 flex items-start justify-center w-full h-full bg-black bg-opacity-50 padding backdrop-blur-sm">
-      <div class="bg-white rounded-lg p-4 w-3/4 mt-28">
+      <div className="w-3/4 p-4 bg-white rounded-lg mt-28">
         <form ref={formRef} action="" className="flex flex-col">
           <input
             ref={taskNameRef}

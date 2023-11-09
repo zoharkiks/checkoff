@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
-import { connectMongoDB, connectPrisma } from "../../../../lib/mongodb";
-import User from "../../../../models/user";
 import prisma from "../../../../prisma";
+import { connectPrisma } from "@/app/utils";
 
 export const POST = async (req) => {
   try {
@@ -9,7 +8,7 @@ export const POST = async (req) => {
 
     const { email } = await req.json();
 
-    const user = await prisma.user.findFirst({
+    const user = await prisma.users.findFirst({
       where: {
         email: email,
       },
@@ -18,8 +17,11 @@ export const POST = async (req) => {
       },
     });
 
-    return NextResponse.json({ message: "User Already Exists",user });
+    return NextResponse.json({ message: "User Already Exists", user });
   } catch (error) {
     console.log(error);
+  } finally {
+    await prisma.$disconnect();
   }
 };
+

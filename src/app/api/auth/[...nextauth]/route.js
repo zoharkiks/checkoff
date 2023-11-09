@@ -1,9 +1,8 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { connectMongoDB, connectPrisma } from "../../../../../lib/mongodb";
-import User from "../../../../../models/user";
 import bcrypt from "bcryptjs";
 import prisma from "../../../../../prisma";
+import { connectPrisma } from "@/app/utils";
 
 const authOptions = {
   providers: [
@@ -18,11 +17,12 @@ const authOptions = {
 
         try {
           await connectPrisma();
-          const user = await prisma.user.findFirst({
+          const user = await prisma.users.findFirst({
             where: {
               email: email,
             },
           });
+
           if (!user) {
             return null;
           }
@@ -40,6 +40,14 @@ const authOptions = {
       },
     }),
   ],
+
+  callbacks: {
+    async session({ session, token }) {
+      session.user.id = token.sub;
+
+      return session;
+    },
+  },
 
   session: {
     strategy: "jwt",

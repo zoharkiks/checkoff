@@ -13,6 +13,7 @@ const Dashboard = () => {
     state.setIsOpen,
   ]);
 
+
   return (
     <div className="padding">
       {isOpen && <CreateNotes />}
