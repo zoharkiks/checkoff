@@ -20,6 +20,6 @@ export const useUserStore = create((set) => ({
 }));
 
 export const useSidebarStore = create((set) => ({
-  isSidebarOpen: true,
+  isSidebarOpen: Boolean,
   setIsSidebarOpen: (isSidebarOpen) => set({ isSidebarOpen }),
 }));

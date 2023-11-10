@@ -40,6 +40,7 @@ const Dashboard = () => {
   // };
 
   return (
+    // TODO Fix sidebar disappearing when coming from homepage
     <div className=" text-text-primary bg-surface-primary">
       {isOpen && <CreateNotes />}
 
@@ -59,10 +60,19 @@ const Dashboard = () => {
 
             {/* <Button onClick={() => signOut({ callbackUrl: "/" })}>
               Log Out
-            </Button>
+            </Button> */}
 
-            <Button onClick={() => setIsOpen(!isOpen)}>+</Button> */}
+<div className="flex justify-end w-full">
+            <Button
+              icon="simple-line-icons:plus"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              New Task
+            </Button>
           </div>
+          </div>
+
+         
 
           {loading ? (
             <span>Loading</span>

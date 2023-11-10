@@ -71,7 +71,7 @@
   @apply transition-colors hover:bg-brand-secondary hover:text-white;
 }
 .mode-active-light {
-  @apply bg-white text-accent-primary;
+  @apply bg-white text-brand-primary;
   transition: background-color 0.5s ease;
 }
 
