@@ -8,5 +8,12 @@ export const useAddNotesStore = create((set) => ({
 export const useUserStore = create((set) => ({
   id:'',
   username: "",
+  notes:[],
   setUsername: (username) => set({ username }),
+  setNotes:(notes)=>set({notes})
+}));
+
+export const useSidebarStore = create((set) => ({
+  isSidebarOpen: true,
+  setIsSidebarOpen: (isSidebarOpen) => set({ isSidebarOpen }),
 }));

@@ -15,6 +15,10 @@
   --bg-300: #cccccc;
 }
 
-.padding{
-  @apply p-4
+.padding {
+  @apply p-4;
+}
+
+.logo {
+  @apply text-xl font-bold text-transparent bg-gradient-to-r from-brand-primary to-brand-secondary bg-clip-text;
 }

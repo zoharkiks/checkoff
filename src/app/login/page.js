@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React, { useRef, useState } from "react";
 import { Button } from "../components/Button";
-import { signIn } from "next-auth/react";
+import { getSession, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 const Login = () => {
@@ -11,10 +11,11 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const router = useRouter();
-
   const emailRef = useRef();
   const passwordRef = useRef();
   const formRef = useRef();
+
+  const session = getSession();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,6 +30,9 @@ const Login = () => {
         redirect: false,
       });
 
+      const session = await getSession();
+      const userId = session?.user?.id;
+
       if (res.error) {
         setError("Invalid Credentials");
         formRef?.current.reset();
@@ -38,10 +42,9 @@ const Login = () => {
       }
       setError("");
 
-      router.replace("dashboard");
+      router.replace(`dashboard/${userId}`);
     } catch (error) {
       setError("");
-
       formRef?.current.reset();
       setLoading(false);
     }

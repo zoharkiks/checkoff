@@ -10,12 +10,14 @@ const CreateAccount = () => {
 
   const emailRef = useRef();
   const passwordRef = useRef();
+  const nameRef = useRef();
   const formRef = useRef();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const email = emailRef.current?.value;
+  const email = emailRef.current?.value;
     const password = passwordRef.current?.value;
+    const name = nameRef.current?.value;
 
     setLoading(true);
 
@@ -44,7 +46,7 @@ const CreateAccount = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password,name }),
       });
 
       if (resRegister.status === 200) {
@@ -76,6 +78,15 @@ const CreateAccount = () => {
           className="grid gap-4 mt-10"
           onSubmit={handleSubmit}
         >
+           <input
+            ref={nameRef}
+            className="capitalize border"
+            placeholder="Your Full Name"
+            type="text"
+            name=""
+            required
+          />
+          
           <input
             ref={emailRef}
             className="border"

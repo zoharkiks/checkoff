@@ -16,7 +16,7 @@ const authOptions = {
         const { email, password } = credentials;
 
         try {
-          await connectPrisma();
+          await connectPrisma ();
           const user = await prisma.users.findFirst({
             where: {
               email: email,
@@ -44,6 +44,7 @@ const authOptions = {
   callbacks: {
     async session({ session, token }) {
       session.user.id = token.sub;
+
 
       return session;
     },

@@ -24,7 +24,7 @@ const CreateNotes = () => {
     
 
     try {
-      const resCreateNote = await fetch("api/notes", {
+      const resCreateNote = await fetch("api/create-note", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

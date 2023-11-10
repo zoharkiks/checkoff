@@ -5,13 +5,14 @@ import { connectPrisma } from "@/app/utils";
 
 export const POST = async (req) => {
   try {
-    const { email, password } = await req.json();
+    const { email, password, name } = await req.json();
     const hashedPassword = await bcrypt.hash(password, 10);
 
 
     await connectPrisma();
     const user = await prisma.users.create({
       data: {
+        name:name,
         email: email,
         password: hashedPassword,
       },
