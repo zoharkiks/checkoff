@@ -13,22 +13,33 @@ const SideBar = () => {
     state.setIsSidebarOpen,
   ]);
 
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState("");
+  const [defaultTheme, setDefaultTheme] = useState("");
 
   // Function to toggle between light and dark themes
   const toggleTheme = (themeName) => {
     setTheme(themeName);
   };
-  
+
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
-  
+
+  // Add user preference theme to the app
+  useEffect(() => {
+    const prefersDarkMode = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    const initialTheme = prefersDarkMode ? "dark" : "light";
+    // Set the data-theme attribute based on the user's system preference
+    document.documentElement.setAttribute("data-theme", initialTheme);
+    setTheme(initialTheme);
+  }, []);
+
   const { data: session } = useSession();
-  
 
   return (
-    <div className="absolute top-0 left-0 w-[60%] min-h-screen md:w-1/4 lg:w-1/5 bg-surface-secondary padding">
+    <div className="absolute top-0 left-0 w-[60%] min-h-screen md:w-1/4 lg:w-1/5 bg-surface-secondary padding ">
       <div className="">
         <div className="flex flex-col">
           <Link href="/" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
@@ -60,8 +71,8 @@ const SideBar = () => {
             <span>Menu</span>
             <Icon icon={"system-uicons:chevron-down"} />
           </div>
- 
-          <div className="flex flex-col p-4 space-y-2">
+
+          <div className="flex flex-col p-4 space-y-2 ">
             {menuItems.map((item) => (
               <Link className="" href={`${item.link}/${session?.user?.id}`}>
                 <div className="flex items-center px-4 py-4 space-x-4 rounded-lg menuItem">
@@ -74,20 +85,27 @@ const SideBar = () => {
         </div>
 
         <div className="flex justify-center w-full">
-        <div className="flex p-2 space-x-2 rounded-lg mt-36 bg-surface-tertiary w-max">
-          <div onClick={()=>toggleTheme('light')} className={`flex items-center px-3 py-1 space-x-1 rounded-lg cursor-pointer ${theme==='light'&& 'mode-active-light'}`}>
-            <Icon  icon={"iconamoon:mode-light-light"}/>
-            <span>Light</span>
-          </div>
-          <div onClick={()=>toggleTheme('dark')} className={`flex items-center px-3 py-1 space-x-1 rounded-lg cursor-pointer ${theme==='dark'&& 'mode-active-dark'}`}>
-          <Icon  icon={"iconamoon:mode-dark-light"}/>
-            <span>Dark</span>
+          <div className="flex p-2 space-x-2 rounded-lg mt-36 bg-surface-tertiary w-max">
+            <div
+              onClick={() => toggleTheme("light")}
+              className={`flex items-center px-3 py-1 space-x-1 rounded-lg cursor-pointer ${
+                theme === "light" && "mode-active-light"
+              }`}
+            >
+              <Icon icon={"iconamoon:mode-light-light"} />
+              <span>Light</span>
+            </div>
+            <div
+              onClick={() => toggleTheme("dark")}
+              className={`flex items-center px-3 py-1 space-x-1 rounded-lg cursor-pointer ${
+                theme === "dark" && "mode-active-dark"
+              }`}
+            >
+              <Icon icon={"iconamoon:mode-dark-light"} />
+              <span>Dark</span>
+            </div>
           </div>
         </div>
-          
-        </div>
-
-       
       </div>
     </div>
   );
