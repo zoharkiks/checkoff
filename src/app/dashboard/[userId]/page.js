@@ -40,29 +40,43 @@ const Dashboard = () => {
   // };
 
   return (
-    <div className="padding text-text-primary bg-surface-primary">
+    <div className=" text-text-primary bg-surface-primary">
       {isOpen && <CreateNotes />}
 
-      {isSidebarOpen && <SideBar />}
-
-      <div className="flex items-center justify-between space-x-4">
-        <Icon onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="text-3xl cursor-pointer text-accent-primary" icon="solar:menu-dots-bold" />
-
-        <Button onClick={() => signOut({ callbackUrl: "/" })}>Log Out</Button>
-
-        <Button onClick={() => setIsOpen(!isOpen)}>+</Button>
-      </div>
-      {loading ? (
-        <span>Loading</span>
-      ) : (
-        <div>
-          {notes?.map((note) => (
-            <div key={note.id}>
-              <SingleNote note={note} taskDesc={note.taskDescription} />
-            </div>
-          ))}
+      <div className="grid md:grid-cols-12">
+        {/* Sidebar */}
+        <div className=" sm:col-span-4 lg:col-span-3">
+          {isSidebarOpen && <SideBar />}
         </div>
-      )}
+
+        <div className="w-full bg-surface-primary sm:col-span-8 lg:col-span-9 padding">
+          <div className="flex items-center justify-between space-x-4">
+            <Icon
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+              className="text-3xl cursor-pointer text-accent-primary md:hidden"
+              icon="solar:menu-dots-bold"
+            />
+
+            {/* <Button onClick={() => signOut({ callbackUrl: "/" })}>
+              Log Out
+            </Button>
+
+            <Button onClick={() => setIsOpen(!isOpen)}>+</Button> */}
+          </div>
+
+          {loading ? (
+            <span>Loading</span>
+          ) : (
+            <div>
+              {notes?.map((note) => (
+                <div key={note.id}>
+                  <SingleNote note={note} taskDesc={note.taskDescription} />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

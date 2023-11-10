@@ -1,7 +1,10 @@
 import { create } from "zustand";
 
-
-
+export const useThemeStore = create((set) => ({
+  theme: "",
+  setTheme: (theme) => set({ theme }),
+  
+}));
 
 export const useAddNotesStore = create((set) => ({
   isOpen: false,
@@ -9,11 +12,11 @@ export const useAddNotesStore = create((set) => ({
 }));
 
 export const useUserStore = create((set) => ({
-  id:'',
+  id: "",
   username: "",
-  notes:[],
+  notes: [],
   setUsername: (username) => set({ username }),
-  setNotes:(notes)=>set({notes})
+  setNotes: (notes) => set({ notes }),
 }));
 
 export const useSidebarStore = create((set) => ({

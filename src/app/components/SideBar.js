@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { useSidebarStore } from "../store";
+import { useSidebarStore, useThemeStore } from "../store";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { Icon } from "@iconify/react";
@@ -13,8 +13,15 @@ const SideBar = () => {
     state.setIsSidebarOpen,
   ]);
 
-  const [theme, setTheme] = useState("");
+  const [theme, setTheme] = useThemeStore((state) => [
+    state.theme,
+    state.setTheme,
+  ]);
+
+
   const [defaultTheme, setDefaultTheme] = useState("");
+
+  
 
   // Function to toggle between light and dark themes
   const toggleTheme = (themeName) => {
@@ -30,7 +37,7 @@ const SideBar = () => {
     const prefersDarkMode = window.matchMedia(
       "(prefers-color-scheme: dark)"
     ).matches;
-    const initialTheme = prefersDarkMode ? "dark" : "light";
+    const initialTheme = theme || (prefersDarkMode ? "dark" : "light");
     // Set the data-theme attribute based on the user's system preference
     document.documentElement.setAttribute("data-theme", initialTheme);
     setTheme(initialTheme);
@@ -39,10 +46,12 @@ const SideBar = () => {
   const { data: session } = useSession();
 
   return (
-    <div className="absolute top-0 left-0 w-[60%] min-h-screen md:w-1/4 lg:w-1/5 bg-surface-secondary padding ">
+    <div className="absolute top-0 left-0 min-h-screen bg-surface-secondary padding md:relative">
+      <Icon onClick={()=>setIsSidebarOpen(!isSidebarOpen)} className="absolute text-xl cursor-pointer top-4 right-4 md:hidden" icon={'jam:close'}/>
+      
       <div className="">
         <div className="flex flex-col">
-          <Link href="/" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+        <Link href="/" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
             <span className="logo">CheckOff</span>
           </Link>
           <span className="text-sm font-medium">
@@ -50,7 +59,7 @@ const SideBar = () => {
           </span>
         </div>
 
-        <div className="grid items-center justify-center grid-cols-4 gap-2 p-2 mt-6 border rounded-xl">
+        <div className="grid items-center justify-center grid-cols-4 gap-2 p-2 mt-6 border w-max rounded-xl">
           {/* profile pic */}
           <div className="w-8 h-8 rounded-full bg-surface-primary"></div>
           {/* User Data */}
