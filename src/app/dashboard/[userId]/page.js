@@ -40,13 +40,13 @@ const Dashboard = () => {
   // };
 
   return (
-    <div className="padding">
+    <div className="padding text-text-primary bg-surface-primary">
       {isOpen && <CreateNotes />}
 
       {isSidebarOpen && <SideBar />}
 
       <div className="flex items-center justify-between space-x-4">
-        <Icon onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="text-3xl cursor-pointer" icon="solar:menu-dots-bold" />
+        <Icon onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="text-3xl cursor-pointer text-accent-primary" icon="solar:menu-dots-bold" />
 
         <Button onClick={() => signOut({ callbackUrl: "/" })}>Log Out</Button>
 
