@@ -41,7 +41,7 @@ const Dashboard = () => {
 
   return (
     // TODO Fix sidebar disappearing when coming from homepage
-    <div className=" text-text-primary bg-surface-primary">
+    <div className="h-screen text-text-primary bg-surface-primary">
       {isOpen && <CreateNotes />}
 
       <div className="grid md:grid-cols-12">
@@ -51,7 +51,7 @@ const Dashboard = () => {
         </div>
 
         <div className="w-full bg-surface-primary sm:col-span-8 lg:col-span-9 padding">
-          <div className="flex items-center justify-between space-x-4">
+          <div className="flex items-center justify-between sp`ace-x-4">
             <Icon
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
               className="text-3xl cursor-pointer text-accent-primary md:hidden"
@@ -62,19 +62,17 @@ const Dashboard = () => {
               Log Out
             </Button> */}
 
-<div className="flex justify-end w-full">
-            <Button
-              icon="simple-line-icons:plus"
-              onClick={() => setIsOpen(!isOpen)}
-            >
-              New Task
-            </Button>
-          </div>
+            <div className="flex justify-end w-full">
+              <Button
+                icon="simple-line-icons:plus"
+                onClick={() => setIsOpen(!isOpen)}
+              >
+                New Task
+              </Button>
+            </div>
           </div>
 
-         
-
-          {loading ? (
+          {/* {loading ? (
             <span>Loading</span>
           ) : (
             <div>
@@ -84,7 +82,11 @@ const Dashboard = () => {
                 </div>
               ))}
             </div>
-          )}
+          )} */}
+
+          <div className="mt-10">
+            <SingleNote />
+          </div>
         </div>
       </div>
     </div>

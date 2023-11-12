@@ -12,8 +12,6 @@ const Navbar = () => {
     state.isSidebarOpen,
     state.setIsSidebarOpen,
   ]);
-  
-
 
   return (
     <nav className="flex items-center justify-between bg-surface-secondary padding">
@@ -21,30 +19,28 @@ const Navbar = () => {
         <span className="logo">CheckOff</span>
       </Link>
 
-
-        {status === "authenticated" ? (
-          <div className="flex space-x-4">
-            
-          <Link onClick={() => setIsSidebarOpen(!isSidebarOpen)} href={`dashboard/${session?.user?.id}`}>
+      {status === "authenticated" ? (
+        <div className="flex space-x-4">
+          <Link
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            href={`dashboard/${session?.user?.id}`}
+          >
             <Button>Dashboard</Button>
           </Link>
 
-        <Button onClick={() => signOut({ callbackUrl: "/" })}>Log Out</Button>
+          <Button onClick={() => signOut({ callbackUrl: "/" })}>Log Out</Button>
+        </div>
+      ) : (
+        <div className="flex space-x-4">
+          <Link href="/login">
+            <Button intent="primary">Login</Button>
+          </Link>
 
-          </div>
-          
-        ) : (
-          <div className="flex space-x-4">
-            <Link href="/login">
-              <Button intent="primary">Login</Button>
-            </Link>
-
-            <Link href="/create-account">
-              <Button intent="secondary">Create Account</Button>
-            </Link>
-          </div>
-        )}
-      
+          <Link href="/create-account">
+            <Button intent="secondary">Create Account</Button>
+          </Link>
+        </div>
+      )}
     </nav>
   );
 };

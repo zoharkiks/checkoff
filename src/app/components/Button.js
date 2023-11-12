@@ -6,7 +6,7 @@ import { Icon } from "@iconify/react";
 
 const button = cva(
   [
-    "font-medium rounded-lg  transition-all flex gap-2 items-center justify-center ",
+    "font-medium rounded-lg  transition-all flex gap-2 items-center justify-center cursor-pointer ",
   ],
   {
     variants: {
