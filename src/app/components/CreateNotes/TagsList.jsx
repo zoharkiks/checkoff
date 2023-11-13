@@ -2,6 +2,7 @@ import { useAddNotesStore, useUserStore } from "@/app/store";
 import { Icon } from "@iconify/react";
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "../Button";
+import { useSession } from "next-auth/react";
 
 const TagsList = () => {
   const [isTagsOpen, setIsTagsOpen, selectedTags, setSelectedTags] =
@@ -13,6 +14,7 @@ const TagsList = () => {
     ]);
 
   const newTagRef = useRef();
+  const { data } = useSession();
 
   const [tags] = useUserStore((state) => [state.tags]);
 
@@ -26,11 +28,27 @@ const TagsList = () => {
     setSelectedTags(updatedList);
   };
 
-  const handleNewTagSubmit = (e) => {
+  const handleNewTagSubmit = async (e) => {
     e.preventDefault();
+    const tagName = newTagRef?.current?.value;
+    const userId = data?.user?.id;
 
-    
-    newTagRef.current.value=""
+    try {
+      const resCreateTag = await fetch("/api/create-tag", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ tagName, userId }),
+      });
+      if (resCreateTag.status === 200) {
+        newTagRef.current.value = "";
+
+        console.log("Tag Created");
+      }
+    } catch (error) {
+      console.log("Tag not created");
+    }
   };
 
   return (

@@ -31,7 +31,7 @@ model Notes {
 
 model UserTag {
   id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
+  tagName String
 
   userId String @db.ObjectId
   User   Users? @relation(fields: [userId], references: [id], onDelete: Cascade)
