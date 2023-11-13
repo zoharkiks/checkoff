@@ -8,10 +8,11 @@ datasource db {
 }
 
 model Users {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  name String 
-  email    String @unique
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  email    String    @unique
   password String
+  userTags UserTag[]
   notes    Notes[]
 }
 
@@ -20,11 +21,24 @@ model Notes {
   taskDescription String
   createdAt       DateTime @default(now())
   taskName        String
-  User Users? @relation(fields: [userId],references: [id], onDelete:Cascade)
+
+  User   Users?  @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String? @db.ObjectId
+
+  Tags  UserTag? @relation(fields: [tagId], references: [id])
+  tagId String   @db.ObjectId
+}
+
+model UserTag {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+
+  userId String @db.ObjectId
+  User   Users? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  notes Notes[]
 }
 
 // TODO Add due date
 // TODO Add Inbox
-// TODO Add Tags
-// TODO Add Priority
+
