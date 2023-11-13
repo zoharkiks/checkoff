@@ -24,7 +24,7 @@ export const useUserStore = create((set) => ({
   username: "",
   notes: [],
   // TODO Change hardcoded tags value
-  tags: ["Productive", "Layout", "Work"],
+  tags: [],
   setUsername: (username) => set({ username }),
   setNotes: (notes) => set({ notes }),
 }));
