@@ -19,7 +19,7 @@ export const GET = async (req) => {
     await connectPrisma();
     const usersWithNotes = await prisma.users.findUnique({
       where: {
-        id: '654ca5c4f49f7c994476d388',
+        id: '654df0ba50e6573989cdd289',
       },
       include: {
         notes: true,

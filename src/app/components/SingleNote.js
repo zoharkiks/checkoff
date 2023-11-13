@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 import React from "react";
 
-const SingleNote = ({ taskDesc }) => {
+const SingleNote = ({taskTitle, taskDesc }) => {
  
 
   return (
@@ -19,7 +19,7 @@ const SingleNote = ({ taskDesc }) => {
       </div>
 
 {/* TODO Add space for task description */}
-      <h4 className="w-1/2 text-3xl font-bold capitalize">
+      <h4 className="text-3xl font-bold capitalize ">
         Create a visual style guide
       </h4>
       <div className="flex justify-between">

@@ -6,6 +6,9 @@ import { Button } from "../components/Button";
 import { getSession, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
+
+// TODO Redirect user to dashboard if already logged in
+
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");

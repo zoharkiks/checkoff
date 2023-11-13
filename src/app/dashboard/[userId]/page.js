@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "../../components/Button";
 import { signOut, useSession } from "next-auth/react";
-import CreateNotes from "../../components/CreateNotes";
+import CreateNotes from "../../components/CreateNotes/CreateNotes";
 import { useAddNotesStore, useSidebarStore, useUserStore } from "../../store";
 import SingleNote from "@/app/components/SingleNote";
 import { Icon } from "@iconify/react";
@@ -40,7 +40,8 @@ const Dashboard = () => {
   // };
 
   return (
-    // TODO Fix sidebar disappearing when coming from homepage
+    // BUGFIX Fix sidebar disappearing when coming from homepage
+    // BUGFIX Run fetch request again on adding a new note
     <div className="h-screen text-text-primary bg-surface-primary">
       {isOpen && <CreateNotes />}
 
@@ -72,18 +73,18 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* {loading ? (
+          {/* 
+           {loading ? (
             <span>Loading</span>
           ) : (
-            <div>
+            <div className="grid gap-5 mt-10">
               {notes?.map((note) => (
                 <div key={note.id}>
                   <SingleNote note={note} taskDesc={note.taskDescription} />
                 </div>
               ))}
             </div>
-          )} */}
-
+          )}  */}
           <div className="mt-10">
             <SingleNote />
           </div>

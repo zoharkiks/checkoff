@@ -8,6 +8,8 @@ export const useThemeStore = create((set) => ({
 
 export const useAddNotesStore = create((set) => ({
   isOpen: false,
+  isPriorityOpen:false,
+  setIsPriorityOpen: (isPriorityOpen) => set({ isPriorityOpen }),
   setIsOpen: (isOpen) => set({ isOpen }),
 }));
 

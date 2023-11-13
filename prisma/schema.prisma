@@ -23,3 +23,8 @@ model Notes {
   User Users? @relation(fields: [userId],references: [id], onDelete:Cascade)
   userId String? @db.ObjectId
 }
+
+// TODO Add due date
+// TODO Add Inbox
+// TODO Add Tags
+// TODO Add Priority
