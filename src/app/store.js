@@ -20,13 +20,14 @@ export const useAddNotesStore = create((set) => ({
 }));
 
 export const useUserStore = create((set) => ({
+  // TODO Change hardcoded tags value
   id: "",
   username: "",
   notes: [],
-  // TODO Change hardcoded tags value
   tags: [],
   setUsername: (username) => set({ username }),
   setNotes: (notes) => set({ notes }),
+  setTags: (tags) => set({ tags }),
 }));
 
 export const useSidebarStore = create((set) => ({

@@ -17,9 +17,11 @@ const Dashboard = () => {
     state.setIsOpen,
   ]);
 
-  const [notes, setNotes] = useUserStore((state) => [
+  const [notes, setNotes, tags, setTags] = useUserStore((state) => [
     state.notes,
     state.setNotes,
+    state.tags,
+    state.setTags,
   ]);
 
   const [isSidebarOpen, setIsSidebarOpen] = useSidebarStore((state) => [
@@ -27,17 +29,27 @@ const Dashboard = () => {
     state.setIsSidebarOpen,
   ]);
 
-  // useEffect(() => {
-  //   fetchNotes();
-  // }, []);
+  useEffect(() => {
+    // fetchNotes();
+    fetchTags();
+  }, []);
 
   // const fetchNotes = async () => {
   //   setLoading(true);
   //   const response = await fetch("/api/get-notes");
   //   const data = await response.json();
   //   setNotes(data?.usersWithNotes?.notes);
+
   //   setLoading(false);
   // };
+
+  const fetchTags = async () => {
+    const response = await fetch("/api/get-tags");
+    const data = await response.json();
+    setTags(data?.allTags?.userTags);
+  };
+
+  (tags);
 
   return (
     // BUGFIX Fix sidebar disappearing when coming from homepage

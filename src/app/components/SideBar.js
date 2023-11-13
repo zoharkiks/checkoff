@@ -83,7 +83,7 @@ const SideBar = () => {
 
           <div className="flex flex-col p-4 space-y-2 ">
             {menuItems.map((item) => (
-              <Link className="" href={`${item.link}/${session?.user?.id}`}>
+              <Link key={item.id} className="" href={`${item.link}/${session?.user?.id}`}>
                 <div className="flex items-center px-4 py-4 space-x-4 rounded-lg menuItem">
                   <Icon className="text-2xl" icon={item.icon} />
                   <span>{item.label}</span>

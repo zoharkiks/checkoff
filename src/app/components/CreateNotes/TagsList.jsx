@@ -18,6 +18,7 @@ const TagsList = () => {
 
   const [tags] = useUserStore((state) => [state.tags]);
 
+
   const handleCheck = (e) => {
     var updatedList = [...selectedTags];
     if (e.target.checked) {
@@ -55,7 +56,7 @@ const TagsList = () => {
     <div className="absolute p-4 text-white border rounded-lg -top-10 left-10 bg-brand-secondary border-accent-primary">
       <h5 className="text-sm">Tags</h5>
 
-      {tags.length === 0 ? (
+      {tags?.length === 0 ? (
         <div className="flex flex-col mt-2 space-y-2">
           <input
             className="p-2 text-black rounded-lg "
@@ -69,17 +70,17 @@ const TagsList = () => {
         </div>
       ) : (
         <div className="grid mt-2 ">
-          {tags.map((tag) => (
+          {tags?.map((tag) => (
             <div key={tag} className="space-x-2">
               <input
                 type="checkbox"
                 onChange={handleCheck}
-                value={tag}
-                checked={selectedTags.includes(tag)}
+                value={tag.tagName}
+                checked={selectedTags.includes(tag.tagName)}
                 name=""
-                id={tag}
+                id={tag.tagName}
               />
-              <span>{tag}</span>
+              <span>{tag.tagName}</span>
             </div>
           ))}
         </div>

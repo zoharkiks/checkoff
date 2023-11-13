@@ -41,6 +41,7 @@ const PriorityList = () => {
       <div className="grid gap-2 mt-2">
         {priorityOptions.map((priority) => (
           <div
+          key={priority.id}
             onClick={() => setIsPriorityOpen(!isPriorityOpen)}
             className="flex items-center px-2 py-1 space-x-2 transition-colors rounded-md cursor-pointer hover:bg-brand-primary "
           >
