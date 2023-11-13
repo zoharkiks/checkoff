@@ -8,6 +8,7 @@ const PriorityList = () => {
     state.setIsPriorityOpen,
   ]);
 
+
   const priorityOptions = [
     {
       id: "1",
@@ -35,7 +36,7 @@ const PriorityList = () => {
   ];
 
   return (
-    <div className="absolute p-4 text-white rounded-lg -top-10 left-10 bg-brand-secondary">
+    <div className="absolute p-4 text-white border rounded-lg -top-10 left-10 bg-brand-secondary border-accent-primary">
       <h5 className="ml-2 text-sm">Priority</h5>
       <div className="grid gap-2 mt-2">
         {priorityOptions.map((priority) => (

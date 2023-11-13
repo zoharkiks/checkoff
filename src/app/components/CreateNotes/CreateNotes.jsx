@@ -5,11 +5,22 @@ import { Button } from "../Button";
 import { useAddNotesStore } from "../../store";
 import { useSession } from "next-auth/react";
 import PriorityList from "./PriorityList";
+import TagsList from "./TagsList";
 
 const CreateNotes = () => {
-  const [setIsOpen, isPriorityOpen, setIsPriorityOpen] = useAddNotesStore(
-    (state) => [state.setIsOpen, state.isPriorityOpen, state.setIsPriorityOpen]
-  );
+  const [
+    setIsOpen,
+    isPriorityOpen,
+    setIsPriorityOpen,
+    isTagsOpen,
+    setIsTagsOpen,
+  ] = useAddNotesStore((state) => [
+    state.setIsOpen,
+    state.isPriorityOpen,
+    state.setIsPriorityOpen,
+    state.isTagsOpen,
+    state.setIsTagsOpen,
+  ]);
 
   const { data } = useSession();
 
@@ -42,12 +53,9 @@ const CreateNotes = () => {
     }
   };
 
-  
-
   // TODO Close modal when clicked outside
   // TODO Add Calendar Functionality
   // TODO Make a dropdown for folder selection
-  // TODO Make a dropdown for priority selection
   // TODO Make a dropdown for tags selection
 
   return (
@@ -83,18 +91,29 @@ const CreateNotes = () => {
                 onClick={(e) => e.preventDefault()}
                 icon={"ion:calendar-number"}
               />
+
+              {/* Priority List */}
               <div className="">
-                
-              {isPriorityOpen && <PriorityList />}
-              <Button
-                onClick={(e) => {setIsPriorityOpen(!isPriorityOpen),e.preventDefault()}}
-                icon={"ion:flag-outline"}
-              />
+                {isPriorityOpen && <PriorityList />}
+                <Button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsPriorityOpen(!isPriorityOpen);
+                  }}
+                  icon={"ion:flag-outline"}
+                />
               </div>
-              <Button
-                onClick={(e) => e.preventDefault()}
-                icon={"ion:pricetag-outline"}
-              />
+
+              {/* Tags list */}
+              <div className="">
+                {isTagsOpen && <TagsList />}
+                <Button
+                  onClick={(e) => {
+                    setIsTagsOpen(!isTagsOpen), e.preventDefault();
+                  }}
+                  icon={"ion:pricetag-outline"}
+                />
+              </div>
               <Button icon={"ion:add-outline"} onClick={handleSubmit} />
             </div>
           </div>
