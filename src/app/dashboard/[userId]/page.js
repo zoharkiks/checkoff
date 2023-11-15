@@ -51,7 +51,7 @@ const Dashboard = () => {
   return (
     // BUGFIX Fix sidebar disappearing when coming from homepage
     // BUGFIX Run fetch request again on adding a new note
-    <div className="h-screen text-text-primary bg-surface-primary">
+    <div className={`text-text-primary bg-surface-primary ${isLoading && 'h-screen'}`}>
       <l-helix></l-helix>
       {isOpen && <CreateNotes />}
 

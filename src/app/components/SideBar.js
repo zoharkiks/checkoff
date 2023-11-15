@@ -50,7 +50,7 @@ const SideBar = () => {
   const { data: session } = useSession();
 
   return (
-    <div className="fixed top-0 left-0 min-h-full overflow-hidden bg-surface-secondary padding md:relative">
+    <div className="fixed top-0 left-0 min-h-full overflow-hidden bg-surface-secondary padding lg:w-1/4">
       <Icon onClick={()=>setIsSidebarOpen(!isSidebarOpen)} className="absolute text-xl cursor-pointer top-4 right-4 md:hidden" icon={'jam:close'}/>
       
       <div className="">
