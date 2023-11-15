@@ -1,13 +1,15 @@
 import { useAddNotesStore } from "@/app/store";
 import { Icon } from "@iconify/react";
-import React from "react";
+import React, { useEffect } from "react";
 
 const PriorityList = () => {
-  const [isPriorityOpen, setIsPriorityOpen] = useAddNotesStore((state) => [
-    state.isPriorityOpen,
-    state.setIsPriorityOpen,
-  ]);
-
+  const [isPriorityOpen, setIsPriorityOpen, priority, setPriority] =
+    useAddNotesStore((state) => [
+      state.isPriorityOpen,
+      state.setIsPriorityOpen,
+      state.priority,
+      state.setPriority,
+    ]);
 
   const priorityOptions = [
     {
@@ -35,18 +37,27 @@ const PriorityList = () => {
     },
   ];
 
+  useEffect(() => {
+    console.log(priority);
+  }, [priority]);
+
   return (
     <div className="absolute p-4 text-white border rounded-lg -top-10 left-10 bg-brand-secondary border-accent-primary">
       <h5 className="ml-2 text-sm">Priority</h5>
       <div className="grid gap-2 mt-2">
-        {priorityOptions.map((priority) => (
+        {priorityOptions.map((option) => (
           <div
-          key={priority.id}
-            onClick={() => setIsPriorityOpen(!isPriorityOpen)}
-            className="flex items-center px-2 py-1 space-x-2 transition-colors rounded-md cursor-pointer hover:bg-brand-primary "
+            key={option.id}
+            onClick={() => {
+              setPriority(option.priorityName),
+                setIsPriorityOpen(!isPriorityOpen);
+            }}
+            className={`flex items-center px-2 py-1 space-x-2 transition-colors rounded-md cursor-pointer hover:bg-brand-primary 
+            ${priority === option.priorityName ? "bg-brand-primary" : ""}
+            `}
           >
-            <Icon className={priority.iconColor} icon={"ion:flag-outline"} />
-            <span>{priority.priorityName}</span>
+            <Icon className={option.iconColor} icon={"ion:flag-outline"} />
+            <span>{option.priorityName}</span>
           </div>
         ))}
       </div>

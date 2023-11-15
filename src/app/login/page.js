@@ -6,8 +6,8 @@ import { Button } from "../components/Button";
 import { getSession, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-
 // TODO Redirect user to dashboard if already logged in
+// BUGFIX Dont render login if session already exists
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -44,7 +44,6 @@ const Login = () => {
         return;
       }
       setError("");
-
       router.replace(`dashboard/${userId}`);
     } catch (error) {
       setError("");

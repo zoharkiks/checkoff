@@ -21,6 +21,8 @@ const CreateAccount = () => {
 
     setLoading(true);
 
+// TODO Redirect user to dashboard on signup
+    
     try {
       // Check existing user
       const resUserExists = await fetch("api/userExists", {

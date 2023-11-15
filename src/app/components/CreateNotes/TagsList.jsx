@@ -52,6 +52,13 @@ const TagsList = () => {
     }
   };
 
+  useEffect(() => {
+    
+  
+   console.log(selectedTags);
+  }, [selectedTags])
+  
+
   return (
     <div className="absolute p-4 text-white border rounded-lg -top-10 left-10 bg-brand-secondary border-accent-primary">
       <h5 className="text-sm">Tags</h5>
@@ -71,7 +78,7 @@ const TagsList = () => {
       ) : (
         <div className="grid mt-2 ">
           {tags?.map((tag) => (
-            <div key={tag} className="space-x-2">
+            <div key={tag.id} className="space-x-2">
               <input
                 type="checkbox"
                 onChange={handleCheck}

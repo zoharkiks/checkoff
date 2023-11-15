@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 
 export const POST = async (req) => {
   try {
-    const { taskName, taskDescription, userId } = await req.json();
+    const { taskName, taskDescription, userId, priority,selectedTags } = await req.json();
 
     if (!taskName || !taskDescription || !userId) {
       return NextResponse.json({ message: "Invalid Data" }, { status: "400" });
@@ -28,7 +28,9 @@ export const POST = async (req) => {
       data: {
         taskName: taskName,
         taskDescription: taskDescription,
-        userId: userId,
+        priority:priority,
+        tags:selectedTags,
+        userId:userId
       },
     });
 

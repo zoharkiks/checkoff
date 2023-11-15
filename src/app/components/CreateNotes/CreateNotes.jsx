@@ -14,12 +14,16 @@ const CreateNotes = () => {
     setIsPriorityOpen,
     isTagsOpen,
     setIsTagsOpen,
+    priority,
+    selectedTags,
   ] = useAddNotesStore((state) => [
     state.setIsOpen,
     state.isPriorityOpen,
     state.setIsPriorityOpen,
     state.isTagsOpen,
     state.setIsTagsOpen,
+    state.priority,
+    state.selectedTags,
   ]);
 
   const { data } = useSession();
@@ -33,6 +37,7 @@ const CreateNotes = () => {
 
     const taskName = taskNameRef?.current?.value;
     const taskDescription = taskDescriptionRef?.current?.value;
+   
     const userId = data?.user?.id;
 
     try {
@@ -41,12 +46,12 @@ const CreateNotes = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ taskName, taskDescription, userId }),
+        body: JSON.stringify({ taskName, taskDescription, userId,priority,selectedTags }),
       });
 
       if (resCreateNote.status === 200) {
         formRef.current.reset();
-        console.log("Note Created");
+        setIsOpen(false);
       }
     } catch (error) {
       console.log("Note not created");

@@ -30,18 +30,18 @@ const Dashboard = () => {
   ]);
 
   useEffect(() => {
-    // fetchNotes();
+    fetchNotes();
     fetchTags();
   }, []);
 
-  // const fetchNotes = async () => {
-  //   setLoading(true);
-  //   const response = await fetch("/api/get-notes");
-  //   const data = await response.json();
-  //   setNotes(data?.usersWithNotes?.notes);
+  const fetchNotes = async () => {
+    setLoading(true);
+    const response = await fetch("/api/get-notes");
+    const data = await response.json();
+    setNotes(data?.usersWithNotes?.notes);
 
-  //   setLoading(false);
-  // };
+    setLoading(false);
+  };
 
   const fetchTags = async () => {
     const response = await fetch("/api/get-tags");
@@ -49,7 +49,7 @@ const Dashboard = () => {
     setTags(data?.allTags?.userTags);
   };
 
-  (tags);
+console.log(notes);
 
   return (
     // BUGFIX Fix sidebar disappearing when coming from homepage
@@ -85,21 +85,22 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* 
-           {loading ? (
+          {loading ? (
             <span>Loading</span>
           ) : (
             <div className="grid gap-5 mt-10">
               {notes?.map((note) => (
                 <div key={note.id}>
-                  <SingleNote note={note} taskDesc={note.taskDescription} />
+                  <SingleNote
+                    taskTitle={note.taskName}
+                    taskDesc={note.taskDescription}
+                    selectedTags={note?.tags}
+                    selectedPriority={note.priority}
+                  />
                 </div>
               ))}
             </div>
-          )}  */}
-          <div className="mt-10">
-            <SingleNote />
-          </div>
+          )}
         </div>
       </div>
     </div>

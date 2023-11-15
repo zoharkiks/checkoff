@@ -11,7 +11,7 @@ export const useAddNotesStore = create((set) => ({
   isPriorityOpen: false,
   isTagsOpen: false,
   selectedTags: [],
-  priority:'',
+  priority:'No Priority',
   setIsPriorityOpen: (isPriorityOpen) => set({ isPriorityOpen }),
   setPriority: (priority) => set({ priority }),
   setSelectedTags: (selectedTags) => set({selectedTags }),

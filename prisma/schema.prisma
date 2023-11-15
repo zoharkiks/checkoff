@@ -21,24 +21,25 @@ model Notes {
   taskDescription String
   createdAt       DateTime @default(now())
   taskName        String
+  tags            String[]
+  priority        String?
 
-  User   Users?  @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String? @db.ObjectId
+  User   Users?  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  tagId String?   @db.ObjectId
   Tags  UserTag? @relation(fields: [tagId], references: [id])
-  tagId String   @db.ObjectId
 }
 
 model UserTag {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
   tagName String
 
-  userId String @db.ObjectId
-  User   Users? @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String? @db.ObjectId
+  User   Users?  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   notes Notes[]
 }
 
 // TODO Add due date
 // TODO Add Inbox
-

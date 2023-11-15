@@ -1,9 +1,12 @@
 import { Icon } from "@iconify/react";
 import React from "react";
 
-const SingleNote = ({taskTitle, taskDesc }) => {
- 
-
+const SingleNote = ({
+  taskTitle,
+  taskDesc,
+  selectedTags,
+  selectedPriority,
+}) => {
   return (
     <div className="space-y-4 text-white rounded-xl padding bg-accent-secondary">
       <div className="flex items-center justify-between">
@@ -18,10 +21,19 @@ const SingleNote = ({taskTitle, taskDesc }) => {
         />
       </div>
 
-{/* TODO Add space for task description */}
-      <h4 className="text-3xl font-bold capitalize ">
-        Create a visual style guide
-      </h4>
+      {/* TODO Add space for task description */}
+      <h4 className="text-3xl font-bold capitalize ">{taskTitle}</h4>
+
+      <h5 className="text-xl font-bold capitalize ">{taskDesc}</h5>
+
+      {selectedTags.length > 0 ? (
+        selectedTags.map((tag) => <div className="px-2 bg-red-500 rounded-xl w-min">{tag}</div>)
+      ) : (
+        <span>No tags</span>
+      )}
+
+      {selectedPriority && <div>{selectedPriority}</div>}
+
       <div className="flex justify-between">
         <span>07:30 AM to 9:30 AM</span>
 
