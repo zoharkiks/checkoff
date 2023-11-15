@@ -4,14 +4,15 @@ import React, { useEffect, useState } from "react";
 import { Button } from "../../components/Button";
 import { signOut, useSession } from "next-auth/react";
 import CreateNotes from "../../components/CreateNotes/CreateNotes";
-import { useAddNotesStore, useSidebarStore, useUserStore } from "../../store";
+import { useAddNotesStore, useLoadingStore, useSidebarStore, useUserStore } from "../../store";
 import SingleNote from "@/app/components/SingleNote";
 import { Icon } from "@iconify/react";
+
 import SideBar from "@/app/components/SideBar";
+import { fetchNotes, fetchTags } from "@/app/utils/fetchUtils";
 
 const Dashboard = () => {
-  const [loading, setLoading] = useState(false);
-  // Accessing State
+  // Accessing Zustand State
   const [isOpen, setIsOpen] = useAddNotesStore((state) => [
     state.isOpen,
     state.setIsOpen,
@@ -29,32 +30,29 @@ const Dashboard = () => {
     state.setIsSidebarOpen,
   ]);
 
+  const [isLoading,setIsLoading] = useLoadingStore((state) => [
+    state.isLoading,
+    state.setIsLoading,
+  ]);
+
+  
+ 
+
   useEffect(() => {
-    fetchNotes();
-    fetchTags();
+    fetchNotes(setIsLoading,setNotes);
+    fetchTags(setTags);
   }, []);
 
-  const fetchNotes = async () => {
-    setLoading(true);
-    const response = await fetch("/api/get-notes");
-    const data = await response.json();
-    setNotes(data?.usersWithNotes?.notes);
 
-    setLoading(false);
-  };
 
-  const fetchTags = async () => {
-    const response = await fetch("/api/get-tags");
-    const data = await response.json();
-    setTags(data?.allTags?.userTags);
-  };
+ 
 
-console.log(notes);
 
   return (
     // BUGFIX Fix sidebar disappearing when coming from homepage
     // BUGFIX Run fetch request again on adding a new note
     <div className="h-screen text-text-primary bg-surface-primary">
+      <l-helix></l-helix>
       {isOpen && <CreateNotes />}
 
       <div className="grid md:grid-cols-12">
@@ -85,7 +83,7 @@ console.log(notes);
             </div>
           </div>
 
-          {loading ? (
+          {isLoading ? (
             <span>Loading</span>
           ) : (
             <div className="grid gap-5 mt-10">

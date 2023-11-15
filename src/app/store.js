@@ -6,6 +6,12 @@ export const useThemeStore = create((set) => ({
 }));
 
 
+export const useLoadingStore = create((set) => ({
+  isLoading:false,
+  setIsLoading: (isLoading) => set({ isLoading }),
+
+}));
+
 export const useAddNotesStore = create((set) => ({
   isOpen: false,
   isPriorityOpen: false,

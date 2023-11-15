@@ -2,10 +2,11 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "../Button";
-import { useAddNotesStore } from "../../store";
+import { useAddNotesStore, useLoadingStore, useUserStore } from "../../store";
 import { useSession } from "next-auth/react";
 import PriorityList from "./PriorityList";
 import TagsList from "./TagsList";
+import { fetchNotes } from "@/app/utils/fetchUtils";
 
 const CreateNotes = () => {
   const [
@@ -26,6 +27,20 @@ const CreateNotes = () => {
     state.selectedTags,
   ]);
 
+  const [isLoading, setIsLoading] = useLoadingStore((state) => [
+    state.isLoading,
+    state.setIsLoading,
+  ]);
+
+  const [notes, setNotes, tags, setTags] = useUserStore((state) => [
+    state.notes,
+    state.setNotes,
+    state.tags,
+    state.setTags,
+  ]);
+
+  
+
   const { data } = useSession();
 
   const taskNameRef = useRef();
@@ -37,8 +52,9 @@ const CreateNotes = () => {
 
     const taskName = taskNameRef?.current?.value;
     const taskDescription = taskDescriptionRef?.current?.value;
-   
+
     const userId = data?.user?.id;
+
 
     try {
       const resCreateNote = await fetch("/api/create-note", {
@@ -46,12 +62,19 @@ const CreateNotes = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ taskName, taskDescription, userId,priority,selectedTags }),
+        body: JSON.stringify({
+          taskName,
+          taskDescription,
+          userId,
+          priority,
+          selectedTags,
+        }),
       });
 
       if (resCreateNote.status === 200) {
-        formRef.current.reset();
         setIsOpen(false);
+        formRef.current.reset();
+        await fetchNotes(setIsLoading,setNotes)
       }
     } catch (error) {
       console.log("Note not created");
@@ -60,13 +83,16 @@ const CreateNotes = () => {
 
   // TODO Close modal when clicked outside
   // TODO Add Calendar Functionality
-  // TODO Make a dropdown for folder selection
   // TODO Make a dropdown for tags selection
 
   return (
     <div className="fixed top-0 left-0 z-10 flex items-start justify-center w-full h-full bg-black bg-opacity-50 padding backdrop-blur-sm">
-      <div className="flex p-4 rounded-lg w-3/ bg-surface-secondary mt-28 ">
-        <form ref={formRef} action="" className="flex flex-col ">
+      <div className="flex justify-center p-4 rounded-lg min-w-[40%] bg-surface-secondary mt-28 ">
+        <form
+          ref={formRef}
+          action=""
+          className="flex flex-col flex-wrap w-full "
+        >
           <input
             ref={taskNameRef}
             className="pb-2 text-lg text-white bg-transparent border-b-2 outline-none border-accent-secondary focus:outline-none placeholder:text-accent-primary "
@@ -83,15 +109,8 @@ const CreateNotes = () => {
             placeholder="Description"
           />
 
-          <div className="flex items-center justify-center mt-4 space-x-4 flex-wra">
-            <Button
-              onClick={(e) => e.preventDefault()}
-              icon={"mingcute:down-fill"}
-            >
-              Inbox
-            </Button>
-
-            <div className="relative flex items-center justify-center space-x-4">
+          <div className="flex items-center justify-start mt-4 space-x-4 ">
+            <div className="relative flex flex-wrap items-center justify-center space-x-4">
               <Button
                 onClick={(e) => e.preventDefault()}
                 icon={"ion:calendar-number"}
