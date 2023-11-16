@@ -1,15 +1,17 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../../prisma";
 import { connectPrisma } from "@/app/utils";
-import { getSession, useSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 
 
 export const GET = async (req,res) => {
 
-    // TODO Remove hardcoded id value
 
-    const session = getSession()
+  const session = await getServerSession(authOptions)
+
+    console.log(req,res);
 
   try {
     // Check if the user is authenticated
@@ -23,7 +25,7 @@ export const GET = async (req,res) => {
     await connectPrisma();
     const allTags = await prisma.users.findUnique({
       where: {
-        id: '654df0ba50e6573989cdd289',
+        id: userId,
       },
       include: {
         userTags: true,

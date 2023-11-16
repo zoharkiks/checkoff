@@ -18,11 +18,12 @@ const Dashboard = () => {
     state.setIsOpen,
   ]);
 
-  const [notes, setNotes, tags, setTags] = useUserStore((state) => [
+  const [notes, setNotes, tags, setTags,id] = useUserStore((state) => [
     state.notes,
     state.setNotes,
     state.tags,
     state.setTags,
+    state.id
   ]);
 
   const [isSidebarOpen, setIsSidebarOpen] = useSidebarStore((state) => [
@@ -44,13 +45,11 @@ const Dashboard = () => {
   }, []);
 
 
-
  
 
 
   return (
     // BUGFIX Fix sidebar disappearing when coming from homepage
-    // BUGFIX Run fetch request again on adding a new note
     <div className={`text-text-primary bg-surface-primary ${isLoading && 'h-screen'}`}>
       <l-helix></l-helix>
       {isOpen && <CreateNotes />}

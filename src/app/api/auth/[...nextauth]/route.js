@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import prisma from "../../../../../prisma";
 import { connectPrisma } from "@/app/utils";
 
-const authOptions = {
+export const authOptions = {
   providers: [
     CredentialsProvider({
       name: "credentials",
@@ -12,11 +12,11 @@ const authOptions = {
         email: { label: "Email", placeholder: "Enter Email" },
         password: { label: "Password", placeholder: "Enter Password" },
       },
-      async authorize(credentials) {
+      async authorize(credentials, req, res) {
         const { email, password } = credentials;
 
         try {
-          await connectPrisma ();
+          await connectPrisma();
           const user = await prisma.users.findFirst({
             where: {
               email: email,
@@ -36,18 +36,24 @@ const authOptions = {
           return user;
         } catch (error) {
           console.log(error);
+        } finally {
+          await prisma.$disconnect();
         }
       },
     }),
   ],
 
   callbacks: {
+    async jwt({ token, user }) {
+      return { ...token, ...user };
+    },
     async session({ session, token }) {
       session.user.id = token.sub;
 
-
-      return session;
+      return { ...session, user: token }
+    
     },
+
   },
 
   session: {

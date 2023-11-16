@@ -26,12 +26,13 @@ export const useAddNotesStore = create((set) => ({
 }));
 
 export const useUserStore = create((set) => ({
-  // TODO Change hardcoded tags value
   id: "",
   username: "",
   notes: [],
   tags: [],
+  
   setUsername: (username) => set({ username }),
+  setId: (id) => set({ id }),
   setNotes: (notes) => set({ notes }),
   setTags: (tags) => set({ tags }),
 }));

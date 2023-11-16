@@ -1,15 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "../components/Button";
 import { getSession, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "../store";
 
 // TODO Redirect user to dashboard if already logged in
 // BUGFIX Dont render login if session already exists
 
 const Login = () => {
+  // Zustand State
+  const [id, setId] = useUserStore((state) => [state.id, state.setId]);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -18,7 +22,13 @@ const Login = () => {
   const passwordRef = useRef();
   const formRef = useRef();
 
-  const session = getSession();
+  const session = useSession();
+
+  // useEffect(() => {
+  //   if (session) {
+  //     router.push(`/dashboard/${id}`);
+  //   }
+  // }, [session, router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

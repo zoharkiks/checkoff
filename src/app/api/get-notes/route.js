@@ -2,12 +2,17 @@ import { NextResponse } from "next/server";
 import prisma from "../../../../prisma";
 import { connectPrisma } from "@/app/utils";
 import { getSession, useSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 
 
-export const GET = async (req) => {
+export const GET = async () => {
 
-  const session = getSession()
+ 
+  const session = await getServerSession(authOptions)
+
+
   try {
     // Check if the user is authenticated
     if (!session) {
@@ -19,7 +24,7 @@ export const GET = async (req) => {
     await connectPrisma();
     const usersWithNotes = await prisma.users.findUnique({
       where: {
-        id: '655390a626a60577df2201cb',
+        id: userId,
       },
       include: {
         notes: true,
