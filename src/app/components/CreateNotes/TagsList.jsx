@@ -5,6 +5,8 @@ import { Button } from "../Button";
 import { useSession } from "next-auth/react";
 
 const TagsList = () => {
+  // BUGFIX Fetch user tags again after creating a tag for first time
+
   const [isTagsOpen, setIsTagsOpen, selectedTags, setSelectedTags] =
     useAddNotesStore((state) => [
       state.isTagsOpen,
@@ -17,7 +19,6 @@ const TagsList = () => {
   const { data } = useSession();
 
   const [tags] = useUserStore((state) => [state.tags]);
-
 
   const handleCheck = (e) => {
     var updatedList = [...selectedTags];
@@ -53,11 +54,8 @@ const TagsList = () => {
   };
 
   useEffect(() => {
-    
-  
-   console.log(selectedTags);
-  }, [selectedTags])
-  
+    console.log(selectedTags);
+  }, [selectedTags]);
 
   return (
     <div className="absolute p-4 text-white border rounded-lg -top-10 left-10 bg-brand-secondary border-accent-primary">

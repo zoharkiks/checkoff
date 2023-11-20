@@ -8,3 +8,4 @@ export const connectPrisma = async () => {
     console.log(error);
   }
 };
+

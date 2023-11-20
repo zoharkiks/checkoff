@@ -6,7 +6,7 @@ import { useAddNotesStore, useLoadingStore, useUserStore } from "../../store";
 import { useSession } from "next-auth/react";
 import PriorityList from "./PriorityList";
 import TagsList from "./TagsList";
-import { fetchNotes } from "@/app/utils/fetchUtils";
+import  {fetchNotes}  from "@/app/utils/fetchUtils";
 
 const CreateNotes = () => {
   const [
@@ -83,7 +83,6 @@ const CreateNotes = () => {
 
   // TODO Close modal when clicked outside
   // TODO Add Calendar Functionality
-  // TODO Make a dropdown for tags selection
 
   return (
     <div className="fixed top-0 left-0 z-10 flex items-start justify-center w-full h-full bg-black bg-opacity-50 padding backdrop-blur-sm">

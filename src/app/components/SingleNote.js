@@ -21,7 +21,6 @@ const SingleNote = ({
         />
       </div>
 
-      {/* TODO Add space for task description */}
       <h4 className="text-3xl font-bold capitalize ">{taskTitle}</h4>
 
       <h5 className="text-xl font-bold capitalize ">{taskDesc}</h5>

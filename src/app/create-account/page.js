@@ -3,26 +3,33 @@
 import React, { useRef, useState } from "react";
 import { Button } from "../components/Button";
 import Link from "next/link";
+import { useUserStore } from "../store";
+import { getSession, signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const CreateAccount = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // Accessing Zustand State
+  const [id, setId] = useUserStore((state) => [state.id, state.setId]);
 
   const emailRef = useRef();
   const passwordRef = useRef();
   const nameRef = useRef();
   const formRef = useRef();
 
+  const router = useRouter();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  const email = emailRef.current?.value;
+    const email = emailRef.current?.value;
     const password = passwordRef.current?.value;
     const name = nameRef.current?.value;
 
     setLoading(true);
 
-// TODO Redirect user to dashboard on signup
-    
+
     try {
       // Check existing user
       const resUserExists = await fetch("api/userExists", {
@@ -48,20 +55,30 @@ const CreateAccount = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password,name }),
+        body: JSON.stringify({ email, password, name }),
       });
 
       if (resRegister.status === 200) {
         formRef.current.reset();
+        await signIn("credentials", {
+          email: email,
+          password: password,
+          redirect: false,
+        });
+
+        const session = await getSession();
+        const userId = session?.user?.id;
+
         setError("");
+        router.replace(`dashboard/${userId}`);
         setLoading(false);
+
       } else {
         // Handle registration error
         setLoading(false);
       }
     } catch (error) {
       setError("");
-
       setLoading(false);
     }
   };
@@ -80,7 +97,7 @@ const CreateAccount = () => {
           className="grid gap-4 mt-10"
           onSubmit={handleSubmit}
         >
-           <input
+          <input
             ref={nameRef}
             className="capitalize border"
             placeholder="Your Full Name"
@@ -88,7 +105,7 @@ const CreateAccount = () => {
             name=""
             required
           />
-          
+
           <input
             ref={emailRef}
             className="border"

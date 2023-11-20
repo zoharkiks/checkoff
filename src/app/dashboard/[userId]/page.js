@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { Button } from "../../components/Button";
-import { signOut, useSession } from "next-auth/react";
 import CreateNotes from "../../components/CreateNotes/CreateNotes";
 import { useAddNotesStore, useLoadingStore, useSidebarStore, useUserStore } from "../../store";
 import SingleNote from "@/app/components/SingleNote";
@@ -50,8 +49,8 @@ const Dashboard = () => {
 
   return (
     // BUGFIX Fix sidebar disappearing when coming from homepage
+    // TODO Display a message if no notes are present
     <div className={`text-text-primary bg-surface-primary ${isLoading && 'h-screen'}`}>
-      <l-helix></l-helix>
       {isOpen && <CreateNotes />}
 
       <div className="grid md:grid-cols-12">
