@@ -3,10 +3,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "../Button";
 import { useAddNotesStore, useLoadingStore, useUserStore } from "../../store";
+import Calendar from "react-calendar";
 import { useSession } from "next-auth/react";
 import PriorityList from "./PriorityList";
+import CalendarList from "./CalendarList";
 import TagsList from "./TagsList";
-import  {fetchNotes}  from "@/app/utils/fetchUtils";
+import { fetchNotes } from "@/app/utils/fetchUtils";
+import { Icon } from "@iconify/react";
 
 const CreateNotes = () => {
   const [
@@ -15,16 +18,22 @@ const CreateNotes = () => {
     setIsPriorityOpen,
     isTagsOpen,
     setIsTagsOpen,
+    isCalendarOpen,
+    setIsCalendarOpen,
     priority,
     selectedTags,
+    dueDate,
   ] = useAddNotesStore((state) => [
     state.setIsOpen,
     state.isPriorityOpen,
     state.setIsPriorityOpen,
     state.isTagsOpen,
     state.setIsTagsOpen,
+    state.isCalendarOpen,
+    state.setIsCalendarOpen,
     state.priority,
     state.selectedTags,
+    state.setDueDate,
   ]);
 
   const [isLoading, setIsLoading] = useLoadingStore((state) => [
@@ -39,8 +48,6 @@ const CreateNotes = () => {
     state.setTags,
   ]);
 
-  
-
   const { data } = useSession();
 
   const taskNameRef = useRef();
@@ -52,8 +59,11 @@ const CreateNotes = () => {
 
     const taskName = taskNameRef?.current?.value;
     const taskDescription = taskDescriptionRef?.current?.value;
+  
 
     const userId = data?.user?.id;
+
+  
 
 
     try {
@@ -68,13 +78,14 @@ const CreateNotes = () => {
           userId,
           priority,
           selectedTags,
+          dueDate,
         }),
       });
 
       if (resCreateNote.status === 200) {
         setIsOpen(false);
         formRef.current.reset();
-        await fetchNotes(setIsLoading,setNotes)
+        await fetchNotes(setIsLoading, setNotes);
       }
     } catch (error) {
       console.log("Note not created");
@@ -110,8 +121,12 @@ const CreateNotes = () => {
 
           <div className="flex items-center justify-start mt-4 space-x-4 ">
             <div className="relative flex flex-wrap items-center justify-center space-x-4">
+              {isCalendarOpen && <CalendarList />}
               <Button
-                onClick={(e) => e.preventDefault()}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsCalendarOpen(!isCalendarOpen);
+                }}
                 icon={"ion:calendar-number"}
               />
 

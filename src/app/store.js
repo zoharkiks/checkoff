@@ -5,23 +5,25 @@ export const useThemeStore = create((set) => ({
   setTheme: (theme) => set({ theme }),
 }));
 
-
 export const useLoadingStore = create((set) => ({
-  isLoading:false,
+  isLoading: false,
   setIsLoading: (isLoading) => set({ isLoading }),
-
 }));
 
 export const useAddNotesStore = create((set) => ({
   isOpen: false,
   isPriorityOpen: false,
   isTagsOpen: false,
+  isCalendarOpen: false,
   selectedTags: [],
-  priority:'No Priority',
+  priority: "No Priority",
+  dueDate:new Date() || '',
   setIsPriorityOpen: (isPriorityOpen) => set({ isPriorityOpen }),
   setPriority: (priority) => set({ priority }),
-  setSelectedTags: (selectedTags) => set({selectedTags }),
+  setDueDate: (date) => set({ dueDate:date }),
+  setSelectedTags: (selectedTags) => set({ selectedTags }),
   setIsTagsOpen: (isTagsOpen) => set({ isTagsOpen }),
+  setIsCalendarOpen: (isCalendarOpen) => set({ isCalendarOpen }),
   setIsOpen: (isOpen) => set({ isOpen }),
 }));
 
@@ -30,7 +32,7 @@ export const useUserStore = create((set) => ({
   username: "",
   notes: [],
   tags: [],
-  
+
   setUsername: (username) => set({ username }),
   setId: (id) => set({ id }),
   setNotes: (notes) => set({ notes }),

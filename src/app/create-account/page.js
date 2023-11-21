@@ -59,18 +59,19 @@ const CreateAccount = () => {
       });
 
       if (resRegister.status === 200) {
-        formRef.current.reset();
         await signIn("credentials", {
           email: email,
           password: password,
           redirect: false,
         });
-
+        
+        
         const session = await getSession();
         const userId = session?.user?.id;
-
+        
         setError("");
         router.replace(`dashboard/${userId}`);
+        formRef.current.reset();
         setLoading(false);
 
       } else {

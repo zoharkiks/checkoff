@@ -23,6 +23,7 @@ model Notes {
   taskName        String
   tags            String[]
   priority        String?
+  dueDate         String
 
   userId String? @db.ObjectId
   User   Users?  @relation(fields: [userId], references: [id], onDelete: Cascade)

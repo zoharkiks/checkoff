@@ -3,10 +3,16 @@ import prisma from "../../../../prisma";
 import { connectPrisma } from "@/app/utils";
 import { useSession } from "next-auth/react";
 
-
 export const POST = async (req) => {
   try {
-    const { taskName, taskDescription, userId, priority,selectedTags } = await req.json();
+    const {
+      taskName,
+      taskDescription,
+      userId,
+      priority,
+      selectedTags,
+      dueDate,
+    } = await req.json();
 
     if (!taskName || !taskDescription || !userId) {
       return NextResponse.json({ message: "Invalid Data" }, { status: "400" });
@@ -28,9 +34,10 @@ export const POST = async (req) => {
       data: {
         taskName: taskName,
         taskDescription: taskDescription,
-        priority:priority,
-        tags:selectedTags,
-        userId:userId
+        priority: priority,
+        tags: selectedTags,
+        userId: userId,
+        dueDate: dueDate,
       },
     });
 
