@@ -7,8 +7,7 @@ import { getSession, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "../store";
 
-// TODO Redirect user to dashboard if already logged in
-// BUGFIX Dont render login if session already exists
+
 
 const Login = () => {
   // Zustand State
@@ -22,13 +21,24 @@ const Login = () => {
   const passwordRef = useRef();
   const formRef = useRef();
 
-  const session = useSession();
+  const { data: session, status } = useSession();
 
-  // useEffect(() => {
-  //   if (session) {
-  //     router.push(`/dashboard/${id}`);
-  //   }
-  // }, [session, router]);
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const userSession = await getSession();
+        if (userSession) {
+          router.replace(`/dashboard/${session?.user?.id}`);
+        }
+      } catch (error) {
+        console.error("Error fetching session:", error);
+      }
+    };
+
+    if (status === "authenticated" && session) {
+      checkSession();
+    }
+  }, [status, session, router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -64,42 +74,50 @@ const Login = () => {
 
   return (
     <div className="padding">
-      <div className="flex">
-        <Link href="/">
-          <span className="font-bold">CheckOff</span>
-        </Link>
-      </div>
-      <div className="grid gap-8 place-items-center ">
-        <h1 className="">Welcome to CheckOff </h1>
-        <p>To get started, please sign in</p>
-
-        <form ref={formRef} onSubmit={handleSubmit}>
-          <label htmlFor="email">Email</label>
-          <div className="flex flex-col space-y-4">
-            <input
-              ref={emailRef}
-              className="border"
-              placeholder="name@company.com"
-              type="email"
-              name=""
-              id="email"
-              required
-            />
-
-            <input
-              ref={passwordRef}
-              className="border"
-              placeholder="Enter Your Password"
-              type="password"
-              name=""
-              id="password"
-              required
-            />
-            {error ? <span>{error}</span> : null}
-            <Button>{loading ? "Loading" : "Log In"}</Button>
+      {status === "authenticated" && session ? (
+        <>
+          <span>Redirecting</span>
+        </>
+      ) : (
+        <>
+          <div className="flex">
+            <Link href="/">
+              <span className="font-bold">CheckOff</span>
+            </Link>
           </div>
-        </form>
-      </div>
+          <div className="grid gap-8 place-items-center ">
+            <h1 className="">Welcome to CheckOff </h1>
+            <p>To get started, please sign in</p>
+
+            <form ref={formRef} onSubmit={handleSubmit}>
+              <label htmlFor="email">Email</label>
+              <div className="flex flex-col space-y-4">
+                <input
+                  ref={emailRef}
+                  className="border"
+                  placeholder="name@company.com"
+                  type="email"
+                  name=""
+                  id="email"
+                  required
+                />
+
+                <input
+                  ref={passwordRef}
+                  className="border"
+                  placeholder="Enter Your Password"
+                  type="password"
+                  name=""
+                  id="password"
+                  required
+                />
+                {error ? <span>{error}</span> : null}
+                <Button>{loading ? "Loading" : "Log In"}</Button>
+              </div>
+            </form>
+          </div>
+        </>
+      )}
     </div>
   );
 };
