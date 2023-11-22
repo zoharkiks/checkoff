@@ -23,6 +23,7 @@ const CreateNotes = () => {
     priority,
     selectedTags,
     dueDate,
+    setDueDate,
   ] = useAddNotesStore((state) => [
     state.setIsOpen,
     state.isPriorityOpen,
@@ -33,6 +34,8 @@ const CreateNotes = () => {
     state.setIsCalendarOpen,
     state.priority,
     state.selectedTags,
+    state.dueDate,
+
     state.setDueDate,
   ]);
 
@@ -59,12 +62,8 @@ const CreateNotes = () => {
 
     const taskName = taskNameRef?.current?.value;
     const taskDescription = taskDescriptionRef?.current?.value;
-  
 
     const userId = data?.user?.id;
-
-  
-
 
     try {
       const resCreateNote = await fetch("/api/create-note", {

@@ -7,8 +7,6 @@ import { useState } from "react";
 import Calendar from "react-calendar";
 
 const CalendarList = () => {
-  
-  
   const [isCalendarOpen, setIsCalendarOpen, dueDate, setDueDate] =
     useAddNotesStore((state) => [
       state.isCalendarOpen,
@@ -17,11 +15,19 @@ const CalendarList = () => {
       state.setDueDate,
     ]);
 
-    const handleCalendarChange = (date) => {
+  const handleCalendarChange = (date) => {
+  
       setDueDate(date);
-    };
     
+  };
 
+  useEffect(() => {
+    
+ console.log(dueDate);
+  }, [dueDate])
+  
+
+  
 
   return (
     <div className="absolute p-4 bg-red-500">
@@ -31,7 +37,7 @@ const CalendarList = () => {
         className="absolute text-sm cursor-pointer top-2 right-2"
         icon={"gg:close"}
       />
-      {dueDate?.toLocaleDateString('en-GB')}
+      {dueDate && dueDate.toLocaleDateString('en-GB')}
     </div>
   );
 };

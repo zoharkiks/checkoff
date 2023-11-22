@@ -3,12 +3,18 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "../../components/Button";
 import CreateNotes from "../../components/CreateNotes/CreateNotes";
-import { useAddNotesStore, useLoadingStore, useSidebarStore, useUserStore } from "../../store";
+import {
+  useAddNotesStore,
+  useLoadingStore,
+  useSidebarStore,
+  useUserStore,
+} from "../../store";
 import SingleNote from "@/app/components/SingleNote";
 import { Icon } from "@iconify/react";
 
 import SideBar from "@/app/components/SideBar";
 import { fetchNotes, fetchTags } from "@/app/utils/fetchUtils";
+import { useSidebar } from "@/app/utils/useSidebar";
 
 const Dashboard = () => {
   // Accessing Zustand State
@@ -17,12 +23,12 @@ const Dashboard = () => {
     state.setIsOpen,
   ]);
 
-  const [notes, setNotes, tags, setTags,id] = useUserStore((state) => [
+  const [notes, setNotes, tags, setTags, id] = useUserStore((state) => [
     state.notes,
     state.setNotes,
     state.tags,
     state.setTags,
-    state.id
+    state.id,
   ]);
 
   const [isSidebarOpen, setIsSidebarOpen] = useSidebarStore((state) => [
@@ -30,27 +36,26 @@ const Dashboard = () => {
     state.setIsSidebarOpen,
   ]);
 
-  const [isLoading,setIsLoading] = useLoadingStore((state) => [
+  const [isLoading, setIsLoading] = useLoadingStore((state) => [
     state.isLoading,
     state.setIsLoading,
   ]);
 
-  
- 
+  useSidebar(setIsSidebarOpen)
+
 
   useEffect(() => {
-    fetchNotes(setIsLoading,setNotes);
+    fetchNotes(setIsLoading, setNotes);
     fetchTags(setTags);
   }, []);
 
 
- 
 
 
   return (
     // BUGFIX Fix sidebar disappearing when coming from homepage
     // TODO Display a message if no notes are present
-    <div className={`text-text-primary bg-surface-primary ${isLoading && 'h-screen'}`}>
+    <div className="h-screen text-text-primary bg-surface-primary ">
       {isOpen && <CreateNotes />}
 
       <div className="grid md:grid-cols-12">
@@ -91,7 +96,8 @@ const Dashboard = () => {
                     taskTitle={note.taskName}
                     taskDesc={note.taskDescription}
                     selectedTags={note?.tags}
-                    selectedPriority={note.priority}
+                    selectedPriority={note?.priority}
+                    dueDate={note?.dueDate}
                   />
                 </div>
               ))}

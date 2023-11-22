@@ -17,14 +17,14 @@ export const useAddNotesStore = create((set) => ({
   isCalendarOpen: false,
   selectedTags: [],
   priority: "No Priority",
-  dueDate:new Date() || '',
+  dueDate: new Date(),
+  setIsOpen: (isOpen) => set({ isOpen }),
   setIsPriorityOpen: (isPriorityOpen) => set({ isPriorityOpen }),
-  setPriority: (priority) => set({ priority }),
-  setDueDate: (date) => set({ dueDate:date }),
-  setSelectedTags: (selectedTags) => set({ selectedTags }),
   setIsTagsOpen: (isTagsOpen) => set({ isTagsOpen }),
   setIsCalendarOpen: (isCalendarOpen) => set({ isCalendarOpen }),
-  setIsOpen: (isOpen) => set({ isOpen }),
+  setSelectedTags: (selectedTags) => set({ selectedTags }),
+  setPriority: (priority) => set({ priority }),
+  setDueDate: (dueDate) => set({ dueDate }),
 }));
 
 export const useUserStore = create((set) => ({
@@ -40,6 +40,6 @@ export const useUserStore = create((set) => ({
 }));
 
 export const useSidebarStore = create((set) => ({
-  isSidebarOpen: true,
+  isSidebarOpen: false,
   setIsSidebarOpen: (isSidebarOpen) => set({ isSidebarOpen }),
 }));
