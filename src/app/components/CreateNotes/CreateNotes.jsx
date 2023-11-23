@@ -7,7 +7,7 @@ import Calendar from "react-calendar";
 import { useSession } from "next-auth/react";
 import PriorityList from "./PriorityList";
 import CalendarList from "./CalendarList";
-import TagsList from "./TagsList";
+import TagsList from "./TagsList/TagsList";
 import { fetchNotes } from "@/app/utils/fetchUtils";
 import { Icon } from "@iconify/react";
 

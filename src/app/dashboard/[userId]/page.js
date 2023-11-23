@@ -36,21 +36,19 @@ const Dashboard = () => {
     state.setIsSidebarOpen,
   ]);
 
-  const [isLoading, setIsLoading] = useLoadingStore((state) => [
+  const [isLoading, setIsLoading,isTagsLoading,setIsTagsLoading] = useLoadingStore((state) => [
     state.isLoading,
     state.setIsLoading,
+    state.isTagsLoading,
+    state.setIsTagsLoading,
   ]);
 
-  useSidebar(setIsSidebarOpen)
-
+  useSidebar(setIsSidebarOpen);
 
   useEffect(() => {
     fetchNotes(setIsLoading, setNotes);
-    fetchTags(setTags);
+    fetchTags(setIsTagsLoading,setTags,);
   }, []);
-
-
-
 
   return (
     // TODO Display a message if no notes are present
@@ -88,18 +86,22 @@ const Dashboard = () => {
           {isLoading ? (
             <span>Loading</span>
           ) : (
-            <div className="grid gap-5 mt-10">
-              {notes?.map((note) => (
-                <div key={note.id}>
-                  <SingleNote
-                    taskTitle={note.taskName}
-                    taskDesc={note.taskDescription}
-                    selectedTags={note?.tags}
-                    selectedPriority={note?.priority}
-                    dueDate={note?.dueDate}
-                  />
-                </div>
-              ))}
+            <div>
+              {notes.length === 0 ? (
+                <span>No notes found</span>
+              ) : (
+                notes.map((note) => (
+                  <div key={note.id}>
+                    <SingleNote
+                      taskTitle={note.taskName}
+                      taskDesc={note.taskDescription}
+                      selectedTags={note?.tags}
+                      selectedPriority={note?.priority}
+                      dueDate={note?.dueDate}
+                    />
+                  </div>
+                ))
+              )}
             </div>
           )}
         </div>

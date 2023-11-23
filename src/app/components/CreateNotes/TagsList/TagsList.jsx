@@ -1,8 +1,10 @@
-import { useAddNotesStore, useUserStore } from "@/app/store";
+import { useAddNotesStore, useLoadingStore, useUserStore } from "@/app/store";
 import { Icon } from "@iconify/react";
 import React, { useEffect, useRef, useState } from "react";
-import { Button } from "../Button";
+import { Button } from "../../Button";
+import NewTag from "@/app/components/CreateNotes/TagsList/NewTag";
 import { useSession } from "next-auth/react";
+import { fetchTags } from "@/app/utils/fetchUtils";
 
 const TagsList = () => {
   // BUGFIX Fetch user tags again after creating a tag for first time
@@ -15,10 +17,18 @@ const TagsList = () => {
       state.setSelectedTags,
     ]);
 
+  const [isLoading, setIsLoading, isTagsLoading, setIsTagsLoading] =
+    useLoadingStore((state) => [
+      state.isLoading,
+      state.setIsLoading,
+      state.isTagsLoading,
+      state.setIsTagsLoading,
+    ]);
+
+  const [tags, setTags] = useUserStore((state) => [state.tags, state.setTags]);
+
   const newTagRef = useRef();
   const { data } = useSession();
-
-  const [tags] = useUserStore((state) => [state.tags]);
 
   const handleCheck = (e) => {
     var updatedList = [...selectedTags];
@@ -36,6 +46,7 @@ const TagsList = () => {
     const userId = data?.user?.id;
 
     try {
+      setIsTagsLoading(true);
       const resCreateTag = await fetch("/api/create-tag", {
         method: "POST",
         headers: {
@@ -43,36 +54,28 @@ const TagsList = () => {
         },
         body: JSON.stringify({ tagName, userId }),
       });
-      if (resCreateTag.status === 200) {
-        newTagRef.current.value = "";
 
-        console.log("Tag Created");
-      }
+      fetchTags(setIsTagsLoading, setTags);
+      newTagRef.current.value = "";
     } catch (error) {
-      console.log("Tag not created");
+      console.log("error in tag");
     }
   };
 
   useEffect(() => {
-    console.log(selectedTags);
-  }, [selectedTags]);
+    console.log(tags);
+  }, [tags]);
 
   return (
     <div className="absolute p-4 text-white border rounded-lg -top-10 left-10 bg-brand-secondary border-accent-primary">
       <h5 className="text-sm">Tags</h5>
 
-      {tags?.length === 0 ? (
-        <div className="flex flex-col mt-2 space-y-2">
-          <input
-            className="p-2 text-black rounded-lg "
-            type="text"
-            placeholder="Create Your First Tag"
-            ref={newTagRef}
-          />
-          <Button onClick={handleNewTagSubmit} intent="secondary">
-            Create
-          </Button>
-        </div>
+      {tags.length === 0 && !isTagsLoading ? (
+        <NewTag
+          newTagRef={newTagRef}
+          handleNewTagSubmit={handleNewTagSubmit}
+          isTagsLoading={isTagsLoading}
+        />
       ) : (
         <div className="grid mt-2 ">
           {tags?.map((tag) => (
@@ -88,6 +91,8 @@ const TagsList = () => {
               <span>{tag.tagName}</span>
             </div>
           ))}
+
+          {isTagsLoading && <span>Loading</span>}
         </div>
       )}
 

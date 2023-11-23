@@ -8,6 +8,8 @@ export const useThemeStore = create((set) => ({
 export const useLoadingStore = create((set) => ({
   isLoading: false,
   setIsLoading: (isLoading) => set({ isLoading }),
+  isTagsLoading: false,
+  setIsTagsLoading: (isTagsLoading) => set({ isTagsLoading }),
 }));
 
 export const useAddNotesStore = create((set) => ({
