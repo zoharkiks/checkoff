@@ -92,7 +92,8 @@ const CreateNotes = () => {
   };
 
   // TODO Close modal when clicked outside
-  // TODO Add Calendar Functionality
+
+  
 
   return (
     <div className="fixed top-0 left-0 z-10 flex items-start justify-center w-full h-full bg-black bg-opacity-50 padding backdrop-blur-sm">

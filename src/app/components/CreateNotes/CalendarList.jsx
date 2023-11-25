@@ -16,18 +16,8 @@ const CalendarList = () => {
     ]);
 
   const handleCalendarChange = (date) => {
-  
-      setDueDate(date);
-    
+    setDueDate(date);
   };
-
-  useEffect(() => {
-    
- console.log(dueDate);
-  }, [dueDate])
-  
-
-  
 
   return (
     <div className="absolute p-4 bg-red-500">
@@ -37,7 +27,7 @@ const CalendarList = () => {
         className="absolute text-sm cursor-pointer top-2 right-2"
         icon={"gg:close"}
       />
-      {dueDate && dueDate.toLocaleDateString('en-GB')}
+      {dueDate && dueDate.toLocaleDateString("en-GB")}
     </div>
   );
 };

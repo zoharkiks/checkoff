@@ -20,6 +20,7 @@ export const useAddNotesStore = create((set) => ({
   selectedTags: [],
   priority: "No Priority",
   dueDate: new Date(),
+  favorites: [],
   setIsOpen: (isOpen) => set({ isOpen }),
   setIsPriorityOpen: (isPriorityOpen) => set({ isPriorityOpen }),
   setIsTagsOpen: (isTagsOpen) => set({ isTagsOpen }),
@@ -27,6 +28,8 @@ export const useAddNotesStore = create((set) => ({
   setSelectedTags: (selectedTags) => set({ selectedTags }),
   setPriority: (priority) => set({ priority }),
   setDueDate: (dueDate) => set({ dueDate }),
+  setFavorites: (favorites) => set({ favorites }),
+
 }));
 
 export const useUserStore = create((set) => ({
@@ -45,3 +48,4 @@ export const useSidebarStore = create((set) => ({
   isSidebarOpen: false,
   setIsSidebarOpen: (isSidebarOpen) => set({ isSidebarOpen }),
 }));
+

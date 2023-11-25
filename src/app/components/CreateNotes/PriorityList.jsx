@@ -37,9 +37,7 @@ const PriorityList = () => {
     },
   ];
 
-  useEffect(() => {
-    console.log(priority);
-  }, [priority]);
+
 
   return (
     <div className="absolute p-4 text-white border rounded-lg -top-10 left-10 bg-brand-secondary border-accent-primary">
@@ -63,7 +61,7 @@ const PriorityList = () => {
       </div>
       <Icon
         onClick={() => setIsPriorityOpen(!isPriorityOpen)}
-        className="absolute text-sm cursor-pointer top-2 right-4"
+        className="absolute z-50 text-sm cursor-pointer top-2 right-4"
         icon={"gg:close"}
       />
     </div>

@@ -23,6 +23,8 @@ model Notes {
   taskName        String
   tags            String[]
   priority        String?
+  favorite        Boolean @default(false)
+
   dueDate         DateTime
 
   userId String? @db.ObjectId
@@ -42,4 +44,3 @@ model UserTag {
   notes Notes[]
 }
 
-// TODO Add due date

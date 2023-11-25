@@ -7,7 +7,6 @@ import { useSession } from "next-auth/react";
 import { fetchTags } from "@/app/utils/fetchUtils";
 
 const TagsList = () => {
-  // BUGFIX Fetch user tags again after creating a tag for first time
 
   const [isTagsOpen, setIsTagsOpen, selectedTags, setSelectedTags] =
     useAddNotesStore((state) => [

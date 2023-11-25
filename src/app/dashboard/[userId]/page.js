@@ -51,7 +51,6 @@ const Dashboard = () => {
   }, []);
 
   return (
-    // TODO Display a message if no notes are present
     <div className="h-screen text-text-primary bg-surface-primary ">
       {isOpen && <CreateNotes />}
 

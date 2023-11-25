@@ -23,7 +23,6 @@ const SideBar = () => {
   ]);
 
 
-  const [defaultTheme, setDefaultTheme] = useState("");
 
   
 

@@ -34,8 +34,11 @@ export const GET = async () => {
 
     return NextResponse.json({ usersWithNotes }, { status: 200 });
   } catch (error) {
+    
     console.log(error);
   } finally {
     await prisma.$disconnect();
   }
 };
+
+
