@@ -20,7 +20,7 @@ export const useAddNotesStore = create((set) => ({
   selectedTags: [],
   priority: "No Priority",
   dueDate: new Date(),
-  favorites: [],
+  favorite: false,
   setIsOpen: (isOpen) => set({ isOpen }),
   setIsPriorityOpen: (isPriorityOpen) => set({ isPriorityOpen }),
   setIsTagsOpen: (isTagsOpen) => set({ isTagsOpen }),
@@ -28,8 +28,6 @@ export const useAddNotesStore = create((set) => ({
   setSelectedTags: (selectedTags) => set({ selectedTags }),
   setPriority: (priority) => set({ priority }),
   setDueDate: (dueDate) => set({ dueDate }),
-  setFavorites: (favorites) => set({ favorites }),
-
 }));
 
 export const useUserStore = create((set) => ({
@@ -37,15 +35,21 @@ export const useUserStore = create((set) => ({
   username: "",
   notes: [],
   tags: [],
+  favoriteNotes: [],
 
   setUsername: (username) => set({ username }),
   setId: (id) => set({ id }),
   setNotes: (notes) => set({ notes }),
   setTags: (tags) => set({ tags }),
+  toggleFavorite: (noteId) =>
+    set((state) => ({
+      notes: state.notes.map((note) =>
+        note.id === noteId ? { ...note, isFavorite: !note.isFavorite } : note
+      ),
+    })),
 }));
 
 export const useSidebarStore = create((set) => ({
   isSidebarOpen: false,
   setIsSidebarOpen: (isSidebarOpen) => set({ isSidebarOpen }),
 }));
-

@@ -3,6 +3,7 @@ import { formatUserDate } from "@/app/utils/formatUserDate";
 import { getColorForPriority } from "@/app/utils/getColorForPriority";
 
 import React from "react";
+import { useAddNotesStore, useUserStore } from "../store";
 
 const SingleNote = ({
   taskTitle,
@@ -10,16 +11,30 @@ const SingleNote = ({
   selectedTags,
   selectedPriority,
   dueDate,
+  id
 }) => {
   const formattedDate = formatUserDate(dueDate);
-  const priorityColorClass = getColorForPriority(selectedPriority)
+  const priorityColorClass = getColorForPriority(selectedPriority);
 
-// TODO Add favorite functionality 
+  // Accessing Zustand State
+  const [toggleFavorite] = useUserStore((state) => [state.toggleFavorite]);
+
+  const handleFavoriteToggle = () => {
+    // Use the 'toggleFavorite' function from the store and pass the note ID
+    toggleFavorite(id);
+    console.log("working");
+  };
+
+  // TODO Add favorite functionality
   return (
-    <div  className="space-y-4 text-white rounded-xl padding bg-accent-secondary">
+    <div className="space-y-4 text-white rounded-xl padding bg-accent-secondary">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <Icon className="text-2xl" icon={"mi:favorite"} />
+          <Icon
+            onClick={handleFavoriteToggle}
+            className="text-2xl cursor-pointer"
+            icon={"mi:favorite"}
+          />
           <span className="mt-1 text-sm font-semibold">{formattedDate}</span>
         </div>
         <Icon
@@ -41,7 +56,11 @@ const SingleNote = ({
         <span>No tags</span>
       )}
 
-      {selectedPriority && <div className={`${priorityColorClass} p-2 w-max rounded`}>{selectedPriority}</div>}
+      {selectedPriority && (
+        <div className={`${priorityColorClass} p-2 w-max rounded`}>
+          {selectedPriority}
+        </div>
+      )}
 
       <div className="flex justify-end">
         {/* <span>07:30 AM to 9:30 AM</span> */}

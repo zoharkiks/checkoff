@@ -23,7 +23,7 @@ model Notes {
   taskName        String
   tags            String[]
   priority        String?
-  favorite        Boolean @default(false)
+  isFavorite        Boolean @default(false)
 
   dueDate         DateTime
 

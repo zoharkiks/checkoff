@@ -52,7 +52,7 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    console.log(notes[1]?.id);
+    console.log(notes);
   }, [notes]);
 
   return (
@@ -98,6 +98,8 @@ const Dashboard = () => {
                   {notes.map((note, index) => (
                     <div key={note?.id || index}>
                       <SingleNote
+                      favorite={note?.favorite}
+                      id={note.id}
                         taskTitle={note?.taskName}
                         taskDesc={note?.taskDescription}
                         selectedTags={note?.tags}
