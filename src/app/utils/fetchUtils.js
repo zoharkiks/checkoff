@@ -4,6 +4,7 @@ export const fetchNotes = async (setIsLoading, setNotes) => {
     const response = await fetch("/api/get-notes");
     const data = await response.json();
     setNotes(data?.usersWithNotes?.notes);
+    setIsLoading(false);
   } catch (error) {
     console.error("Error fetching notes:", error);
     setIsLoading(false);

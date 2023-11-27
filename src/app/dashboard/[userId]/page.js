@@ -36,19 +36,24 @@ const Dashboard = () => {
     state.setIsSidebarOpen,
   ]);
 
-  const [isLoading, setIsLoading,isTagsLoading,setIsTagsLoading] = useLoadingStore((state) => [
-    state.isLoading,
-    state.setIsLoading,
-    state.isTagsLoading,
-    state.setIsTagsLoading,
-  ]);
+  const [isLoading, setIsLoading, isTagsLoading, setIsTagsLoading] =
+    useLoadingStore((state) => [
+      state.isLoading,
+      state.setIsLoading,
+      state.isTagsLoading,
+      state.setIsTagsLoading,
+    ]);
 
   useSidebar(setIsSidebarOpen);
 
   useEffect(() => {
     fetchNotes(setIsLoading, setNotes);
-    fetchTags(setIsTagsLoading,setTags,);
+    fetchTags(setIsTagsLoading, setTags);
   }, []);
+
+  useEffect(() => {
+    console.log(notes[1]?.id);
+  }, [notes]);
 
   return (
     <div className="h-screen text-text-primary bg-surface-primary ">
@@ -85,23 +90,25 @@ const Dashboard = () => {
           {isLoading ? (
             <span>Loading</span>
           ) : (
-            <div>
+            <>
               {notes.length === 0 ? (
                 <span>No notes found</span>
               ) : (
-                notes.map((note) => (
-                  <div key={note.id}>
-                    <SingleNote
-                      taskTitle={note.taskName}
-                      taskDesc={note.taskDescription}
-                      selectedTags={note?.tags}
-                      selectedPriority={note?.priority}
-                      dueDate={note?.dueDate}
-                    />
-                  </div>
-                ))
+                <div className="grid gap-5">
+                  {notes.map((note, index) => (
+                    <div key={note?.id || index}>
+                      <SingleNote
+                        taskTitle={note?.taskName}
+                        taskDesc={note?.taskDescription}
+                        selectedTags={note?.tags}
+                        selectedPriority={note?.priority}
+                        dueDate={note?.dueDate}
+                      />
+                    </div>
+                  ))}
+                </div>
               )}
-            </div>
+            </>
           )}
         </div>
       </div>

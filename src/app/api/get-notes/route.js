@@ -7,21 +7,24 @@ import { authOptions } from "../auth/[...nextauth]/route";
 
 
 
+/**
+ * Retrieves the user's notes from the database and returns them as a JSON response.
+ * If the user is not authenticated, returns an unauthorized status.
+ */
 export const GET = async () => {
-
- 
-  const session = await getServerSession(authOptions)
-
-
   try {
-    // Check if the user is authenticated
+    // Authenticate the user
+    const session = await getServerSession(authOptions);
+
     if (!session) {
+      // Return unauthorized status if user is not authenticated
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    // Get User ID from session
-    const userId = session?.user?.id
+    const userId = session?.user?.id;
     await connectPrisma();
+
+    // Retrieve the user's notes from the database
     const usersWithNotes = await prisma.users.findUnique({
       where: {
         id: userId,
@@ -32,11 +35,12 @@ export const GET = async () => {
       },
     });
 
+    // Return the user's notes as a JSON response
     return NextResponse.json({ usersWithNotes }, { status: 200 });
   } catch (error) {
-    
     console.log(error);
   } finally {
+    // Disconnect from the database
     await prisma.$disconnect();
   }
 };
