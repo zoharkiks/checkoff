@@ -10,6 +10,8 @@ export const useLoadingStore = create((set) => ({
   setIsLoading: (isLoading) => set({ isLoading }),
   isTagsLoading: false,
   setIsTagsLoading: (isTagsLoading) => set({ isTagsLoading }),
+  isSubmitLoading: false,
+  setIsSubmitLoading: (isSubmitLoading) => set({ isSubmitLoading }),
 }));
 
 export const useAddNotesStore = create((set) => ({

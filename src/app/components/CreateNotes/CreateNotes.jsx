@@ -39,10 +39,13 @@ const CreateNotes = () => {
     state.setDueDate,
   ]);
 
-  const [isLoading, setIsLoading] = useLoadingStore((state) => [
-    state.isLoading,
-    state.setIsLoading,
-  ]);
+  const [isLoading, setIsLoading, isSubmitLoading, setIsSubmitLoading] =
+    useLoadingStore((state) => [
+      state.isLoading,
+      state.setIsLoading,
+      state.isSubmitLoading,
+      state.setIsSubmitLoading,
+    ]);
 
   const [notes, setNotes, tags, setTags] = useUserStore((state) => [
     state.notes,
@@ -52,6 +55,7 @@ const CreateNotes = () => {
   ]);
 
   const { data } = useSession();
+  const [errorMessage, setErrorMessage] = useState("");
 
   const taskNameRef = useRef();
   const taskDescriptionRef = useRef();
@@ -66,6 +70,8 @@ const CreateNotes = () => {
     const userId = data?.user?.id;
 
     try {
+      setIsSubmitLoading(true);
+      setErrorMessage('')
       const resCreateNote = await fetch("/api/create-note", {
         method: "POST",
         headers: {
@@ -81,20 +87,24 @@ const CreateNotes = () => {
         }),
       });
 
-      if (resCreateNote.status === 200) {
+      if (resCreateNote === 200) {
+        setIsSubmitLoading(false);
         setIsOpen(false);
         formRef.current.reset();
         await fetchNotes(setIsLoading, setNotes);
+      } else {
+        const errorData = await resCreateNote.json();
+        setErrorMessage(errorData?.message);
+        setIsSubmitLoading(false);
       }
     } catch (error) {
-      console.log("Note not created");
+      console.log(error);
+      setIsSubmitLoading(false);
     }
   };
 
   // TODO Close modal when clicked outside
   // TODO Disable submit button when task is getting submitted
-
-  
 
   return (
     <div className="fixed top-0 left-0 z-10 flex items-start justify-center w-full h-full bg-black bg-opacity-50 padding backdrop-blur-sm">
@@ -153,9 +163,23 @@ const CreateNotes = () => {
                   icon={"ion:pricetag-outline"}
                 />
               </div>
-              <Button icon={"ion:add-outline"} onClick={handleSubmit} />
+              <Button
+                disabled={isSubmitLoading}
+                className={`${
+                  isSubmitLoading && "bg-gray-500 hover:bg-gray-500"
+                }`}
+                onClick={handleSubmit}
+              >
+                {isSubmitLoading ? (
+                  <span className="text-sm">Creating</span>
+                ) : (
+                  <Icon width={20} icon={"ion:add-outline"}></Icon>
+                )}
+              </Button>
             </div>
           </div>
+
+          {errorMessage && <span>{errorMessage}</span>}
         </form>
       </div>
     </div>

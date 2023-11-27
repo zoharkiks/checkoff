@@ -98,7 +98,7 @@ const Dashboard = () => {
                   {notes.map((note, index) => (
                     <div key={note?.id || index}>
                       <SingleNote
-                      favorite={note?.favorite}
+                      favorite={note?.isFavorite}
                       id={note.id}
                         taskTitle={note?.taskName}
                         taskDesc={note?.taskDescription}

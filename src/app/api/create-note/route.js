@@ -15,7 +15,10 @@ export const POST = async (req) => {
     } = await req.json();
 
     if (!taskName || !taskDescription || !userId) {
-      return NextResponse.json({ message: "Invalid Data" }, { status: "400" });
+      return NextResponse.json(
+        { message: "Check Your Data" },
+        { status: "400" }
+      );
     }
 
     await connectPrisma();
