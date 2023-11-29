@@ -28,7 +28,7 @@ const SingleNote = ({
     console.log("working");
 
     try {
-      const response = await fetch("/api/update-note", {
+      const response = await fetch("/api/update-favorite", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -47,7 +47,6 @@ const SingleNote = ({
 
   
 
-  // TODO Add favorite functionality
   return (
     <div className="space-y-4 text-white rounded-xl padding bg-accent-secondary">
       <div className="flex items-center justify-between">
