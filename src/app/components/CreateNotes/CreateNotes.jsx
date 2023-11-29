@@ -71,7 +71,7 @@ const CreateNotes = () => {
 
     try {
       setIsSubmitLoading(true);
-      setErrorMessage('')
+      setErrorMessage("");
       const resCreateNote = await fetch("/api/create-note", {
         method: "POST",
         headers: {
@@ -87,25 +87,25 @@ const CreateNotes = () => {
         }),
       });
 
-      if (resCreateNote === 200) {
-        setIsSubmitLoading(false);
+      if (resCreateNote.ok) {
         setIsOpen(false);
-        formRef.current.reset();
         await fetchNotes(setIsLoading, setNotes);
+        setIsSubmitLoading(false);
+        formRef.current.reset();
       } else {
         const errorData = await resCreateNote.json();
         setErrorMessage(errorData?.message);
         setIsSubmitLoading(false);
       }
     } catch (error) {
-      console.log(error);
       setIsSubmitLoading(false);
     }
   };
 
   // TODO Close modal when clicked outside
-  // TODO Disable submit button when task is getting submitted
 
+
+  
   return (
     <div className="fixed top-0 left-0 z-10 flex items-start justify-center w-full h-full bg-black bg-opacity-50 padding backdrop-blur-sm">
       <div className="flex justify-center p-4 rounded-lg min-w-[40%] bg-surface-secondary mt-28 ">

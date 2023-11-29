@@ -9,6 +9,7 @@ import { menuItems } from "../utils/menuItems";
 const SideBar = () => {
 
   // TODO Smooth out light and dark animation on switch
+  // TODO Add SignOut
 
   
   // Accessing Zustand States

@@ -5,13 +5,16 @@ import { getColorForPriority } from "@/app/utils/getColorForPriority";
 import React from "react";
 import { useAddNotesStore, useUserStore } from "../store";
 
+// TODO Add edit 
+
 const SingleNote = ({
   taskTitle,
   taskDesc,
   selectedTags,
   selectedPriority,
   dueDate,
-  id
+  id,
+  favorite
 }) => {
   const formattedDate = formatUserDate(dueDate);
   const priorityColorClass = getColorForPriority(selectedPriority);
@@ -19,11 +22,30 @@ const SingleNote = ({
   // Accessing Zustand State
   const [toggleFavorite] = useUserStore((state) => [state.toggleFavorite]);
 
-  const handleFavoriteToggle = () => {
+  const handleFavoriteToggle = async () => {
     // Use the 'toggleFavorite' function from the store and pass the note ID
     toggleFavorite(id);
     console.log("working");
+
+    try {
+      const response = await fetch("/api/update-note", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          noteId: id,
+          favorite: favorite, // or false, depending on the desired state
+        }),
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error("An error occurred while updating the note:", error);
+    }
   };
+
+  
 
   // TODO Add favorite functionality
   return (
