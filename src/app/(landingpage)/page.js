@@ -16,7 +16,7 @@ export default function Home() {
   
 
   useEffect(() => {
-    setUserPreferenceTheme(setTheme);
+    setUserPreferenceTheme(null,setTheme);
   }, []);
 
   

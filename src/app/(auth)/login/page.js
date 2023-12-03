@@ -122,7 +122,12 @@ const Login = () => {
                   />
                 </div>
                 {error ? <span>{error}</span> : null}
-                <Button>{loading ? "Logging You In" : "Log In"}</Button>
+                <Button 
+                disabled={loading}
+                className={`${
+                  loading && "bg-gray-500 hover:bg-gray-500"
+                }`}
+                >{loading ? "Logging You In" : "Log In"}</Button>
               </div>
             </form>
           </div>

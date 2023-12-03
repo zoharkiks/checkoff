@@ -53,10 +53,7 @@ const Dashboard = () => {
     fetchTags(setIsTagsLoading, setTags);
   }, []);
 
-  useEffect(() => {
-    console.log(notes);
-  }, [notes]);
-
+ 
   return (
     <div className="h-screen text-text-primary bg-surface-primary ">
       {isOpen && <CreateNotes />}
@@ -79,7 +76,9 @@ const Dashboard = () => {
               Log Out
             </Button> */}
 
-            <div className="flex justify-end w-full">
+            
+            {notes.length > 0 && (
+              <div className="flex justify-end w-full">
               <Button
                 icon="simple-line-icons:plus"
                 onClick={() => setIsOpen(!isOpen)}
@@ -87,14 +86,26 @@ const Dashboard = () => {
                 New Task
               </Button>
             </div>
+            )}
           </div>
 
           {isLoading ? (
-            <span>Loading</span>
+            <div className="flex flex-col items-center justify-center h-screen ">
+              
+              <span>Loading</span>
+            </div>
           ) : (
             <>
               {notes.length === 0 ? (
-                <span>No notes found</span>
+                <div className="flex flex-col items-center justify-center h-screen ">
+                  <div className="flex-col">
+                    <p> No Tasks Found 😟</p>
+                    <div className="flex items-center justify-center w-full ">
+                      
+                    <Button onClick={() => setIsOpen(!isOpen)} intent='ghost' size={'medium'} >Create Now</Button>
+                    </div>
+                  </div>
+                </div>
               ) : (
                 <div className="grid gap-5 mt-10 md:grid-cols-2 ">
                   {notes?.map((note, index) => (

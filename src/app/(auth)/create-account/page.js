@@ -147,7 +147,12 @@ const CreateAccount = () => {
         
 
           <span>{error}</span>
-          <Button>{loading ? "Signing You Up" : "Sign Up"}</Button>
+          <Button
+          disabled={loading}
+          className={`${
+            loading && "bg-gray-500 hover:bg-gray-500"
+          }`}
+          >{loading ? "Signing You Up" : "Sign Up"}</Button>
         </form>
       </div>
     </div>

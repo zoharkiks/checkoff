@@ -37,16 +37,16 @@ const SideBar = () => {
   //   document.documentElement.setAttribute("data-theme", theme);
   // }, [theme]);
 
-  // // Add user preference theme to the app
-  // useEffect(() => {
-  //   const prefersDarkMode = window.matchMedia(
-  //     "(prefers-color-scheme: dark)"
-  //   ).matches;
-  //   const initialTheme = theme || (prefersDarkMode ? "dark" : "light");
-  //   // Set the data-theme attribute based on the user's system preference
-  //   document.documentElement.setAttribute("data-theme", initialTheme);
-  //   setTheme(initialTheme);
-  // }, []);
+  // Add user preference theme to the app
+  useEffect(() => {
+    const prefersDarkMode = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    const initialTheme = theme || (prefersDarkMode ? "dark" : "light");
+    // Set the data-theme attribute based on the user's system preference
+    document.documentElement.setAttribute("data-theme", initialTheme);
+    setTheme(initialTheme);
+  }, []);
 
 
   
