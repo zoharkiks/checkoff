@@ -1,20 +1,22 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Button } from "../../components/Button";
-import CreateNotes from "../../components/CreateNotes/CreateNotes";
 import {
   useAddNotesStore,
   useLoadingStore,
   useSidebarStore,
   useUserStore,
-} from "../../store";
-import SingleNote from "@/app/components/SingleNote";
+} from "../../../store";
+
 import { Icon } from "@iconify/react";
 
-import SideBar from "@/app/components/SideBar";
+import SideBar from "../../_components/SideBar";
+
 import { fetchNotes, fetchTags } from "@/app/utils/fetchUtils";
 import { useSidebar } from "@/app/utils/useSidebar";
+import CreateNotes from "../../_components/CreateNotes";
+import SingleNote from "../../_components/SingleNote";
+import { Button } from "@/components/Button";
 
 const Dashboard = () => {
   // Accessing Zustand State
@@ -94,12 +96,12 @@ const Dashboard = () => {
               {notes.length === 0 ? (
                 <span>No notes found</span>
               ) : (
-                <div className="grid gap-5">
-                  {notes.map((note, index) => (
+                <div className="grid gap-5 mt-10 md:grid-cols-2 ">
+                  {notes?.map((note, index) => (
                     <div key={note?.id || index}>
                       <SingleNote
-                      favorite={note?.isFavorite}
-                      id={note.id}
+                        favorite={note?.isFavorite}
+                        id={note.id}
                         taskTitle={note?.taskName}
                         taskDesc={note?.taskDescription}
                         selectedTags={note?.tags}

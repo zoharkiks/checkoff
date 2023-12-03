@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "./Button";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
-import { useSidebarStore } from "../store";
+import { useSidebarStore } from "../app/store";
 
 const Navbar = () => {
   const { data: session, status } = useSession();

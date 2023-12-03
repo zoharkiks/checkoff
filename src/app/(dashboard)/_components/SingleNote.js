@@ -3,8 +3,7 @@ import { formatUserDate } from "@/app/utils/formatUserDate";
 import { getColorForPriority } from "@/app/utils/getColorForPriority";
 
 import React from "react";
-import { useAddNotesStore, useLoadingStore, useUserStore } from "../store";
-import { fetchNotes } from "../utils/fetchUtils";
+import { useAddNotesStore, useLoadingStore, useUserStore } from "../../store";
 
 // TODO Add edit
 
@@ -31,11 +30,9 @@ const SingleNote = ({
     state.setIsLoading,
   ]);
 
-
   const handleFavoriteToggle = async () => {
     // Use the 'toggleFavorite' function from the store and pass the note ID
     toggleFavorite(id);
-    console.log("working");
 
     try {
       const response = await fetch("/api/update-favorite", {
@@ -54,14 +51,17 @@ const SingleNote = ({
   };
 
   return (
-    <div className="space-y-4 text-white rounded-xl padding bg-accent-secondary">
+    <div className="flex flex-col justify-center space-y-4 text-white h-max rounded-xl padding bg-accent-secondary ">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          
           <Icon
             onClick={handleFavoriteToggle}
-            className={`text-2xl cursor-pointer ${favorite && 'text-red-500'}`}
-            icon={favorite ? "material-symbols:favorite" : "material-symbols:favorite-outline"}
+            className={`text-2xl cursor-pointer ${favorite && "text-red-500"}`}
+            icon={
+              favorite
+                ? "material-symbols:favorite"
+                : "material-symbols:favorite-outline"
+            }
           />
           <span className="mt-1 text-sm font-semibold">{formattedDate}</span>
         </div>
@@ -75,8 +75,6 @@ const SingleNote = ({
       <h4 className="text-3xl font-bold capitalize ">{taskTitle}</h4>
 
       <h5 className="text-xl font-bold capitalize ">{taskDesc}</h5>
-
-      <h3>{favorite ? "Favorite" : "Not Favorite"}</h3>
 
       {selectedTags.length > 0 ? (
         selectedTags.map((tag) => (
@@ -97,7 +95,6 @@ const SingleNote = ({
 
         <div className="flex items-center justify-center w-8 h-8 rounded-full bg-surface-primary">
           pp
-
         </div>
       </div>
     </div>

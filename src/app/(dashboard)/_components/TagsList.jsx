@@ -1,8 +1,8 @@
 import { useAddNotesStore, useLoadingStore, useUserStore } from "@/app/store";
 import { Icon } from "@iconify/react";
 import React, { useEffect, useRef, useState } from "react";
-import { Button } from "../../Button";
-import NewTag from "@/app/components/CreateNotes/TagsList/NewTag";
+import { Button } from "../../../components/Button";
+import NewTag from "../_components/NewTag";
 import { useSession } from "next-auth/react";
 import { fetchTags } from "@/app/utils/fetchUtils";
 

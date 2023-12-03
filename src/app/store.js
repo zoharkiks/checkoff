@@ -42,6 +42,14 @@ export const useUserStore = create((set) => ({
   setUsername: (username) => set({ username }),
   setId: (id) => set({ id }),
   setNotes: (notes) => set({ notes }),
+
+
+ prependNote: (createdNote) => {
+    set((state) => ({
+      notes: [createdNote, ...state.notes],
+    }));
+  },
+
   setTags: (tags) => set({ tags }),
   toggleFavorite: (noteId) =>
     set((state) => ({

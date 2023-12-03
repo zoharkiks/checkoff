@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { Button } from "../Button";
+import { Button } from "../../../components/Button";
 import { useAddNotesStore, useLoadingStore, useUserStore } from "../../store";
 import Calendar from "react-calendar";
 import { useSession } from "next-auth/react";
 import PriorityList from "./PriorityList";
 import CalendarList from "./CalendarList";
-import TagsList from "./TagsList/TagsList";
+import TagsList from "./TagsList";
 import { fetchNotes } from "@/app/utils/fetchUtils";
 import { Icon } from "@iconify/react";
 
@@ -47,12 +47,15 @@ const CreateNotes = () => {
       state.setIsSubmitLoading,
     ]);
 
-  const [notes, setNotes, tags, setTags] = useUserStore((state) => [
-    state.notes,
-    state.setNotes,
-    state.tags,
-    state.setTags,
-  ]);
+  const [notes, setNotes, tags, setTags, prependNote] = useUserStore(
+    (state) => [
+      state.notes,
+      state.setNotes,
+      state.tags,
+      state.setTags,
+      state.prependNote,
+    ]
+  );
 
   const { data } = useSession();
   const [errorMessage, setErrorMessage] = useState("");
@@ -89,7 +92,8 @@ const CreateNotes = () => {
 
       if (resCreateNote.ok) {
         setIsOpen(false);
-        await fetchNotes(setIsLoading, setNotes);
+        const { createdNote } = await resCreateNote.json();
+        prependNote(createdNote);
         setIsSubmitLoading(false);
         formRef.current.reset();
       } else {
@@ -104,11 +108,14 @@ const CreateNotes = () => {
 
   // TODO Close modal when clicked outside
 
-
-  
   return (
     <div className="fixed top-0 left-0 z-10 flex items-start justify-center w-full h-full bg-black bg-opacity-50 padding backdrop-blur-sm">
-      <div className="flex justify-center p-4 rounded-lg min-w-[40%] bg-surface-secondary mt-28 ">
+      <div className="flex justify-center p-4 rounded-lg min-w-[40%] bg-surface-secondary mt-28 relative ">
+        <Icon
+          icon={"gg:close"}
+          className="absolute cursor-pointer right-3 top-2 "
+          onClick={() => setIsOpen(false)}
+        />
         <form
           ref={formRef}
           action=""
@@ -116,7 +123,7 @@ const CreateNotes = () => {
         >
           <input
             ref={taskNameRef}
-            className="pb-2 text-lg text-white bg-transparent border-b-2 outline-none border-accent-secondary focus:outline-none placeholder:text-accent-primary "
+            className="pb-2 text-lg bg-transparent border-b-2 outline-none text-text-primary border-accent-secondary focus:outline-none placeholder:text-accent-primary "
             type="text"
             name=""
             id="note_title"
@@ -124,7 +131,7 @@ const CreateNotes = () => {
           />
           <textarea
             ref={taskDescriptionRef}
-            className="mt-4 overflow-hidden text-white break-words bg-transparent outline-none whitespace-break-spaces focus:outline-none placeholder:text-accent-primary "
+            className="mt-4 overflow-hidden break-words bg-transparent outline-none text-text-primary whitespace-break-spaces focus:outline-none placeholder:text-accent-primary "
             name=""
             id="note_title"
             placeholder="Description"
@@ -163,6 +170,7 @@ const CreateNotes = () => {
                   icon={"ion:pricetag-outline"}
                 />
               </div>
+
               <Button
                 disabled={isSubmitLoading}
                 className={`${

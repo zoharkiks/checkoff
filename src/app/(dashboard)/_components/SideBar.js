@@ -1,10 +1,10 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { useSidebarStore, useThemeStore } from "../store";
+import { useSidebarStore, useThemeStore } from "../../store";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { Icon } from "@iconify/react";
-import { menuItems } from "../utils/menuItems";
+import { menuItems } from "../../utils/menuItems";
 
 const SideBar = () => {
 

@@ -33,7 +33,7 @@ export const POST = async (req) => {
       return NextResponse.json({ message: "Invalid User" }, { status: "404" });
     }
 
-    await prisma.notes.create({
+    const createdNote = await prisma.notes.create({
       data: {
         taskName: taskName,
         taskDescription: taskDescription,
@@ -45,8 +45,8 @@ export const POST = async (req) => {
     });
 
     return NextResponse.json(
-      { message: "Note Created Successfully" },
-      { status: "200" }
+      { message: "Note Created Successfully",createdNote },
+      { status: "200" },
     );
   } catch (error) {
     console.log(error);

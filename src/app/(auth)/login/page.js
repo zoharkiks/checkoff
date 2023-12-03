@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
-import { Button } from "../components/Button";
+import { Button } from "../../../components/Button";
 import { getSession, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useUserStore } from "../store";
+import { useUserStore } from "../../store";
 
 
 

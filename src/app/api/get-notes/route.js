@@ -30,7 +30,11 @@ export const GET = async () => {
         id: userId,
       },
       include: {
-        notes: true,
+        notes: {
+          orderBy: {
+            createdAt: 'desc',
+          },
+        },
         _count: true,
       },
     });

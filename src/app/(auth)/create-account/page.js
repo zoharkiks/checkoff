@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { Button } from "../components/Button";
+import { Button } from "../../../components/Button";
 import Link from "next/link";
-import { useUserStore } from "../store";
+import { useUserStore } from "../../store";
 import { getSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
