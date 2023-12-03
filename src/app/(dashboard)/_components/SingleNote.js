@@ -51,7 +51,7 @@ const SingleNote = ({
   };
 
   return (
-    <div className="flex flex-col justify-center space-y-4 text-white h-max rounded-xl padding bg-accent-secondary ">
+    <div className="flex flex-col justify-center space-y-4 dark:text-white text-text-primary h-max rounded-xl padding bg-accent-secondary ">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <Icon

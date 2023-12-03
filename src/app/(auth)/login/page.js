@@ -82,7 +82,7 @@ const Login = () => {
         <>
           <div className="flex">
             <Link href="/">
-              <span className="font-bold">CheckOff</span>
+              <span className="font-bold logo">CheckOff</span>
             </Link>
           </div>
           <div className="grid gap-8 place-items-center ">

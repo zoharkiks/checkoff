@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { Icon } from "@iconify/react";
 import { menuItems } from "../../utils/menuItems";
+import { setUserPreferenceTheme,toggleTheme } from "../../utils/setTheme";
 
 const SideBar = () => {
 
@@ -27,26 +28,39 @@ const SideBar = () => {
 
   
 
-  // Function to toggle between light and dark themes
-  const toggleTheme = (themeName) => {
-    setTheme(themeName);
-  };
+  // // Function to toggle between light and dark themes
+  // const toggleTheme = (themeName) => {
+  //   setTheme(themeName);
+  // };
 
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
+  // useEffect(() => {
+  //   document.documentElement.setAttribute("data-theme", theme);
+  // }, [theme]);
+
+  // // Add user preference theme to the app
+  // useEffect(() => {
+  //   const prefersDarkMode = window.matchMedia(
+  //     "(prefers-color-scheme: dark)"
+  //   ).matches;
+  //   const initialTheme = theme || (prefersDarkMode ? "dark" : "light");
+  //   // Set the data-theme attribute based on the user's system preference
+  //   document.documentElement.setAttribute("data-theme", initialTheme);
+  //   setTheme(initialTheme);
+  // }, []);
+
+
+  
+
+
+   // Update the data-theme attribute whenever the theme state changes
+   useEffect(() => {
+    if (theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+    }
   }, [theme]);
 
-  // Add user preference theme to the app
-  useEffect(() => {
-    const prefersDarkMode = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    const initialTheme = theme || (prefersDarkMode ? "dark" : "light");
-    // Set the data-theme attribute based on the user's system preference
-    document.documentElement.setAttribute("data-theme", initialTheme);
-    setTheme(initialTheme);
-  }, []);
 
+  
   const { data: session } = useSession();
 
   return (
@@ -100,7 +114,7 @@ const SideBar = () => {
         <div className="flex justify-center w-full">
           <div className="flex p-2 space-x-2 rounded-lg mt-36 bg-surface-tertiary w-max">
             <div
-              onClick={() => toggleTheme("light")}
+              onClick={() => toggleTheme('light', setTheme)}
               className={`flex items-center px-3 py-1 space-x-1 rounded-lg cursor-pointer ${
                 theme === "light" && "mode-active-light"
               }`}
@@ -109,7 +123,7 @@ const SideBar = () => {
               <span>Light</span>
             </div>
             <div
-              onClick={() => toggleTheme("dark")}
+              onClick={() => toggleTheme('dark', setTheme)}
               className={`flex items-center px-3 py-1 space-x-1 rounded-lg cursor-pointer ${
                 theme === "dark" && "mode-active-dark"
               }`}

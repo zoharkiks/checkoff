@@ -1,8 +1,10 @@
+'use client';
+
 import React from "react";
-import { Button } from "./Button";
+import { Button } from "../../../components/Button";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
-import { useSidebarStore } from "../app/store";
+import { useSidebarStore } from "../../store";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
@@ -25,7 +27,7 @@ const Navbar = () => {
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             href={`dashboard/${session?.user?.id}`}
           >
-            <Button>Dashboard</Button>
+            <Button intent='ghost' >Enter CheckOff</Button>
           </Link>
 
           <Button onClick={() => signOut({ callbackUrl: "/" })}>Log Out</Button>
@@ -33,11 +35,11 @@ const Navbar = () => {
       ) : (
         <div className="flex space-x-4">
           <Link href="/login">
-            <Button intent="primary">Login</Button>
+            <Button intent="ghost">Log In</Button>
           </Link>
 
           <Link href="/create-account">
-            <Button intent="secondary">Create Account</Button>
+            <Button intent="secondary">Get CheckOff Free</Button>
           </Link>
         </div>
       )}

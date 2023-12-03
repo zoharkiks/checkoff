@@ -1,18 +1,28 @@
-'use client'
+"use client";
 
-import Image from 'next/image'
-import Navbar from '../../components/Navbar'
+import { useEffect } from "react";
+import { useThemeStore } from "../store";
+import { setUserPreferenceTheme } from "../utils/setTheme";
+import Heading from "./_components/Heading";
 
-import { useSession } from 'next-auth/react'
 
 export default function Home() {
 
+  const [theme, setTheme] = useThemeStore((state) => [
+    state.theme,
+    state.setTheme,
+  ]);
+
+  
+
+  useEffect(() => {
+    setUserPreferenceTheme(setTheme);
+  }, []);
+
+  
   return (
-    <main className="">
-      <header className="">
-                <Navbar />
-HOMEPAGE
-      </header>
-    </main>
-  )
+    <div className="flex flex-col items-center justify-center min-h-full bg-surface-secondary padding">
+      <Heading />
+    </div>
+  );
 }
