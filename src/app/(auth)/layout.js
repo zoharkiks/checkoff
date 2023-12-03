@@ -1,6 +1,6 @@
 const RootLayout = ({children}) => {
     return ( 
-        <div className="h-screen bg-gradient-to-r from-violet-200 to-pink-200">
+        <div className="h-screen bg-surface-secondary">
             {children}
         </div>
      );

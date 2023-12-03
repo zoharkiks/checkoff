@@ -7,8 +7,6 @@ import { getSession, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "../../store";
 
-
-
 const Login = () => {
   // Zustand State
   const [id, setId] = useUserStore((state) => [state.id, state.setId]);
@@ -73,7 +71,7 @@ const Login = () => {
   };
 
   return (
-    <div className="padding">
+    <div className="text-text-primary padding">
       {status === "authenticated" && session ? (
         <>
           <span>Redirecting</span>
@@ -85,34 +83,46 @@ const Login = () => {
               <span className="font-bold logo">CheckOff</span>
             </Link>
           </div>
-          <div className="grid gap-8 place-items-center ">
-            <h1 className="">Welcome to CheckOff </h1>
+          <div className="grid gap-8 mt-10 place-items-center ">
+            <h2 className="text-3xl font-medium md:text-4xl">
+              Welcome to CheckOff{" "}
+            </h2>
             <p>To get started, please sign in</p>
 
             <form ref={formRef} onSubmit={handleSubmit}>
-              <label htmlFor="email">Email</label>
               <div className="flex flex-col space-y-4">
-                <input
-                  ref={emailRef}
-                  className="border"
-                  placeholder="name@company.com"
-                  type="email"
-                  name=""
-                  id="email"
-                  required
-                />
+                <div className="flex flex-col space-y-1">
+                  <label className="text-sm font-medium" htmlFor="email">
+                    Email
+                  </label>
+                  <input
+                    ref={emailRef}
+                    className="w-full px-4 py-1 text-black placeholder-gray-400 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-200 focus:border-transparent"
+                    placeholder="name@company.com"
+                    type="email"
+                    name="email"
+                    id="email"
+                    required
+                  />
+                </div>
 
-                <input
-                  ref={passwordRef}
-                  className="border"
-                  placeholder="Enter Your Password"
-                  type="password"
-                  name=""
-                  id="password"
-                  required
-                />
+                <div className="flex flex-col space-y-1">
+                  <label className="text-sm font-medium" htmlFor="password">
+                    Password
+                  </label>
+
+                  <input
+                    ref={passwordRef}
+                    className="w-full px-4 py-1 text-black placeholder-gray-400 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-200 focus:border-transparent"
+                    placeholder="Enter Your Password"
+                    type="password"
+                    name="password"
+                    id="password"
+                    required
+                  />
+                </div>
                 {error ? <span>{error}</span> : null}
-                <Button>{loading ? "Loading" : "Log In"}</Button>
+                <Button>{loading ? "Logging You In" : "Log In"}</Button>
               </div>
             </form>
           </div>

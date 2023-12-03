@@ -29,7 +29,6 @@ const CreateAccount = () => {
 
     setLoading(true);
 
-
     try {
       // Check existing user
       const resUserExists = await fetch("api/userExists", {
@@ -64,16 +63,14 @@ const CreateAccount = () => {
           password: password,
           redirect: false,
         });
-        
-        
+
         const session = await getSession();
         const userId = session?.user?.id;
-        
+
         setError("");
         router.replace(`dashboard/${userId}`);
         formRef.current.reset();
         setLoading(false);
-
       } else {
         // Handle registration error
         setLoading(false);
@@ -84,49 +81,73 @@ const CreateAccount = () => {
     }
   };
   return (
-    <div className="padding">
+    <div className="padding text-text-primary">
       <div className="flex">
         <Link href="/">
           <span className="font-bold logo">CheckOff</span>
         </Link>
       </div>
       <div className="grid place-items-center ">
-        <h1 className="">You are in for a ride </h1>
+        <h1 className="text-3xl font-medium md:text-4xl">
+          You are in for a ride{" "}
+        </h1>
 
         <form
           ref={formRef}
           className="grid gap-4 mt-10"
           onSubmit={handleSubmit}
         >
-          <input
-            ref={nameRef}
-            className="capitalize border"
-            placeholder="Your Full Name"
-            type="text"
-            name=""
-            required
-          />
+          <div className="flex flex-col space-y-1">
+            <label className="text-sm font-medium" htmlFor="name">
+              Name
+            </label>
+            <input
+              ref={nameRef}
+              className="w-full px-4 py-1 text-black placeholder-gray-400 capitalize border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-200 focus:border-transparent"
+              placeholder="Your Full Name"
+              type="text"
+              name="name"
+              required
+            />
+          </div>
 
-          <input
+          <div className="flex flex-col space-y-1">
+            <label className="text-sm font-medium" htmlFor="email">
+              Email
+            </label>
+            <input
             ref={emailRef}
-            className="border"
+            className="w-full px-4 py-1 text-black placeholder-gray-400 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-200 focus:border-transparent"
             placeholder="name@company.com"
             type="email"
-            name=""
+            name="email"
             required
           />
+          </div>
 
-          <input
+
+          <div className="flex flex-col space-y-1">
+            <label className="text-sm font-medium" htmlFor="password">
+              Password
+            </label>
+            <input
             ref={passwordRef}
-            className="border"
+            className="w-full px-4 py-1 text-black placeholder-gray-400 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-200 focus:border-transparent"
             placeholder="Enter Your Password"
             type="password"
-            name=""
+            name="password"
             required
           />
+          </div>
+
+          
+
+        
+
+        
 
           <span>{error}</span>
-          <Button>{loading ? "Loading" : "Sign Up"}</Button>
+          <Button>{loading ? "Signing You Up" : "Sign Up"}</Button>
         </form>
       </div>
     </div>

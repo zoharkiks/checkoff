@@ -21,7 +21,7 @@ export default function Home() {
 
   
   return (
-    <div className="flex flex-col items-center justify-center min-h-full bg-surface-secondary padding">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-surface-secondary padding">
       <Heading />
     </div>
   );
