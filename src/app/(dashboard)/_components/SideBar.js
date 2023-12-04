@@ -64,10 +64,10 @@ const SideBar = () => {
   const { data: session } = useSession();
 
   return (
-    <div className="fixed top-0 left-0 min-h-full overflow-hidden bg-surface-secondary padding lg:w-1/4">
+    <div className="fixed top-0 left-0 h-full overflow-hidden bg-surface-secondary padding lg:w-1/4">
       <Icon onClick={()=>setIsSidebarOpen(!isSidebarOpen)} className="absolute text-xl cursor-pointer top-4 right-4 md:hidden" icon={'jam:close'}/>
       
-      <div className="">
+      <div className="flex flex-col justify-between h-full">
         <div className="flex flex-col">
         <Link href="/" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
             <span className="logo">CheckOff</span>
@@ -112,7 +112,7 @@ const SideBar = () => {
         </div>
 
         <div className="flex justify-center w-full">
-          <div className="flex p-2 space-x-2 rounded-lg mt-36 bg-surface-tertiary w-max">
+          <div className="flex p-2 mt-3 space-x-2 rounded-lg bg-surface-tertiary w-max">
             <div
               onClick={() => toggleTheme('light', setTheme)}
               className={`flex items-center px-3 py-1 space-x-1 rounded-lg cursor-pointer ${

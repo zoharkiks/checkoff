@@ -9,7 +9,7 @@ const Heading = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-full max-w-3xl space-y-4 text-center text-text-primary">
-      <h1 className="text-3xl font-bold sm:text-5xl md:text-6xl">
+      <h1 className="text-3xl font-bold !leading-tight sm:text-5xl md:text-6xl">
         Craft Your Tasks, Amplify Collaboration, Achieve Mastery.
       </h1>
 
