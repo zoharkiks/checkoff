@@ -50,6 +50,30 @@ const SingleNote = ({
     }
   };
 
+  const handleFinishedToggle = async () => {
+    try {
+      const res = await fetch("/api/mark-finished", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          noteId: id,
+          finished: true, // or false, depending on the desired state
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to mark note as finished");
+      }
+    } catch (error) {
+      console.error(
+        "An error occurred while marking the note as finished:",
+        error
+      );
+    }
+  };
+
   return (
     <div className="flex flex-col justify-center space-y-4 dark:text-white text-text-primary h-max rounded-xl padding bg-accent-secondary ">
       <div className="flex items-center justify-between">
@@ -66,9 +90,10 @@ const SingleNote = ({
           <span className="mt-1 text-sm font-semibold">{formattedDate}</span>
         </div>
         <Icon
-          className="cursor-pointer"
-          width={30}
-          icon={"fluent:open-48-filled"}
+          onClick={handleFinishedToggle}
+          className="transition-colors cursor-pointer hover:text-green-600"
+          width={25}
+          icon={"fluent-mdl2:completed-solid"}
         />
       </div>
 
@@ -78,7 +103,9 @@ const SingleNote = ({
 
       {selectedTags.length > 0 ? (
         selectedTags.map((tag) => (
-          <div className="px-2 bg-red-500 rounded-xl w-min">{tag}</div>
+          <div className="px-2 bg-red-300 rounded-xl w-min text-text-primary">
+            {tag}
+          </div>
         ))
       ) : (
         <span>No tags</span>

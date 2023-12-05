@@ -24,6 +24,7 @@ model Notes {
   tags            String[]
   priority        String?
   isFavorite        Boolean @default(false)
+  isFinished        Boolean @default(false)
 
   dueDate         DateTime
 

@@ -1,9 +1,29 @@
-export const fetchNotes = async (setIsLoading, setNotes) => {
+export const fetchNotes = async (
+  setIsLoading,
+  setNotes,
+  setCompletedNotes,
+  status
+) => {
+  let url = "/api/get-notes";
+
+  // Append the status query parameter if it is provided
+  if (status) {
+    url += `?status=${status}`;
+  }
+
   try {
     setIsLoading(true);
-    const response = await fetch("/api/get-notes");
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     const data = await response.json();
-    setNotes(data?.usersWithNotes?.notes);
+
+    if (status === "unfinished") {
+      setNotes(data?.usersWithNotes?.notes);
+    } else setCompletedNotes(data?.usersWithNotes?.notes);
     setIsLoading(false);
   } catch (error) {
     console.error("Error fetching notes:", error);

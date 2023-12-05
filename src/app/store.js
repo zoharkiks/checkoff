@@ -36,15 +36,16 @@ export const useUserStore = create((set) => ({
   id: "",
   username: "",
   notes: [],
+  completedNotes: [],
   tags: [],
   favoriteNotes: [],
 
   setUsername: (username) => set({ username }),
   setId: (id) => set({ id }),
   setNotes: (notes) => set({ notes }),
+  setCompletedNotes: (completedNotes) => set({ completedNotes }),
 
-
- prependNote: (createdNote) => {
+  prependNote: (createdNote) => {
     set((state) => ({
       notes: [createdNote, ...state.notes],
     }));

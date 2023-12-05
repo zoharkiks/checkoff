@@ -5,13 +5,11 @@ import { getSession, useSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 
-
-
 /**
  * Retrieves the user's notes from the database and returns them as a JSON response.
  * If the user is not authenticated, returns an unauthorized status.
  */
-export const GET = async () => {
+export const GET = async (req, res) => {
   try {
     // Authenticate the user
     const session = await getServerSession(authOptions);
@@ -24,6 +22,12 @@ export const GET = async () => {
     const userId = session?.user?.id;
     await connectPrisma();
 
+    //  // Extract the query parameter
+    const url = new URL(req.url);
+    const status = url.searchParams.get("status");
+    const isFinished = status === 'finished';
+
+
     // Retrieve the user's notes from the database
     const usersWithNotes = await prisma.users.findUnique({
       where: {
@@ -31,8 +35,11 @@ export const GET = async () => {
       },
       include: {
         notes: {
+          where: status ? {
+            isFinished: isFinished,
+          } : {},
           orderBy: {
-            createdAt: 'desc',
+            createdAt: "desc",
           },
         },
         _count: true,
@@ -48,5 +55,3 @@ export const GET = async () => {
     await prisma.$disconnect();
   }
 };
-
-

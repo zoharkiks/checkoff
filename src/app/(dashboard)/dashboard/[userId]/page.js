@@ -25,12 +25,13 @@ const Dashboard = () => {
     state.setIsOpen,
   ]);
 
-  const [notes, setNotes, tags, setTags, id] = useUserStore((state) => [
+  const [notes, setNotes, tags, setTags, id,setCompletedNotes] = useUserStore((state) => [
     state.notes,
     state.setNotes,
     state.tags,
     state.setTags,
     state.id,
+    state.setCompletedNotes,
   ]);
 
   const [isSidebarOpen, setIsSidebarOpen] = useSidebarStore((state) => [
@@ -49,9 +50,10 @@ const Dashboard = () => {
   useSidebar(setIsSidebarOpen);
 
   useEffect(() => {
-    fetchNotes(setIsLoading, setNotes);
+    fetchNotes(setIsLoading, setNotes, setCompletedNotes,'unfinished');
     fetchTags(setIsTagsLoading, setTags);
   }, []);
+  
 
  
   return (
@@ -89,7 +91,7 @@ const Dashboard = () => {
             )}
           </div>
 
-          {isLoading ? (
+          {isLoading ?  (
             <div className="flex flex-col items-center justify-center h-screen ">
               
               <span>Loading</span>
