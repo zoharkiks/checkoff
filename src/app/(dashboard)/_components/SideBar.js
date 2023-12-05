@@ -4,7 +4,7 @@ import { useSidebarStore, useThemeStore } from "../../store";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { Icon } from "@iconify/react";
-import { menuItems } from "../../utils/menuItems";
+import { getMenuItems } from "../../utils/menuItems";
 import { setUserPreferenceTheme,toggleTheme } from "../../utils/setTheme";
 
 const SideBar = () => {
@@ -62,9 +62,11 @@ const SideBar = () => {
 
   
   const { data: session } = useSession();
+  const menuItems = getMenuItems(session?.user?.id);
+
 
   return (
-    <div className="fixed top-0 left-0 h-full overflow-hidden bg-surface-secondary padding lg:w-1/4">
+    <div className="fixed top-0 left-0 h-full overflow-hidden dark:text-white bg-surface-secondary padding lg:w-1/4">
       <Icon onClick={()=>setIsSidebarOpen(!isSidebarOpen)} className="absolute text-xl cursor-pointer top-4 right-4 md:hidden" icon={'jam:close'}/>
       
       <div className="flex flex-col justify-between h-full">
@@ -101,7 +103,7 @@ const SideBar = () => {
 
           <div className="flex flex-col p-4 space-y-2 ">
             {menuItems.map((item) => (
-              <Link key={item.id} className="" href={`${item.link}/${session?.user?.id}`}>
+              <Link key={item.id} className=""href={item.link}>
                 <div className="flex items-center px-4 py-4 space-x-4 rounded-lg menuItem">
                   <Icon className="text-2xl" icon={item.icon} />
                   <span>{item.label}</span>

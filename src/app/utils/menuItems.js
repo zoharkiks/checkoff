@@ -1,29 +1,29 @@
-export const menuItems = [{
+export const getMenuItems = (userId) => [
+  {
+    id: "1",
+    label: "Overview",
+    icon: "pajamas:overview",
+    link: `/dashboard/${userId}`,
+  },
 
-    id:"1",
-    label: 'Overview',
-    icon: 'pajamas:overview',
-    link: '/dashboard',
-},
+  {
+    id: "2",
+    label: "Completed Notes",
+    icon: "octicon:tasklist-16",
+    link: `/dashboard/${userId}/completed-notes`,
+  },
 
-{
-    id:"2",
-    label: 'Tasklist',
-    icon: 'octicon:tasklist-16',
-    link: '/dashboard',
-},
+  {
+    id: "3",
+    label: "Calendar",
+    icon: "octicon:calendar-16",
+    link: `/dashboard/${userId}/completed-notes`,
+  },
 
-{
-    id:"3",
-    label: 'Calendar',
-    icon: 'octicon:calendar-16',
-    link: '/dashboard',
-},
-
-{
-    id:"4",
-    label: 'Settings',
-    icon: 'mingcute:settings-3-line',
-    link: '/dashboard',
-},
-]
+  {
+    id: "4",
+    label: "Settings",
+    icon: "mingcute:settings-3-line",
+    link: `/dashboard/${userId}/settings`,
+  },
+];
