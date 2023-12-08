@@ -13,12 +13,12 @@ export const getMenuItems = (userId) => [
     link: `/dashboard/${userId}/completed-notes`,
   },
 
-  {
-    id: "3",
-    label: "Calendar",
-    icon: "octicon:calendar-16",
-    link: `/dashboard/${userId}/completed-notes`,
-  },
+  // {
+  //   id: "3",
+  //   label: "Calendar",
+  //   icon: "octicon:calendar-16",
+  //   link: `/dashboard/${userId}/completed-notes`,
+  // },
 
   {
     id: "4",

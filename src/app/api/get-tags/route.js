@@ -4,14 +4,8 @@ import { connectPrisma } from "@/app/utils";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 
-
-
-export const GET = async (req,res) => {
-
-
-  const session = await getServerSession(authOptions)
-
-    console.log(req,res);
+export const GET = async (req, res) => {
+  const session = await getServerSession(authOptions);
 
   try {
     // Check if the user is authenticated
@@ -20,7 +14,7 @@ export const GET = async (req,res) => {
     }
 
     // Get User ID from session
-    const userId = session?.user?.id
+    const userId = session?.user?.id;
 
     await connectPrisma();
     const allTags = await prisma.users.findUnique({

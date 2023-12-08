@@ -6,6 +6,7 @@ import React from "react";
 import { useAddNotesStore, useLoadingStore, useUserStore } from "../../store";
 
 // TODO Add edit
+// TODO Add toast notifications
 
 const SingleNote = ({
   taskTitle,

@@ -52,12 +52,16 @@ const Dashboard = () => {
   useSidebar(setIsSidebarOpen);
 
   useEffect(() => {
-    fetchNotes(setIsLoading, setNotes, setCompletedNotes, "unfinished");
-    fetchTags(setIsTagsLoading, setTags);
+    if (notes.length === 0) {
+      fetchNotes(setIsLoading, setNotes, setCompletedNotes, "unfinished");
+    }
+    if (tags.length === 0) {
+      fetchTags(setIsTagsLoading, setTags);
+    }
   }, []);
 
   return (
-    <div className="padding">
+    <div className="">
       {isOpen && <CreateNotes />}
 
       {notes.length > 0 && (
@@ -93,9 +97,9 @@ const Dashboard = () => {
               </div>
             </div>
           ) : (
-            <div className="grid gap-5 mt-10 md:grid-cols-2 ">
+            <div className="grid h-full gap-5 mt-10 md:grid-cols-2 ">
               {notes?.map((note, index) => (
-                <div key={note?.id || index}>
+                <div className="h-full " key={note?.id || index}>
                   <SingleNote
                     favorite={note?.isFavorite}
                     id={note.id}

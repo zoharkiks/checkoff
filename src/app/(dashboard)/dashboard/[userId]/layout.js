@@ -23,7 +23,7 @@ const DashboardLayout = ({ children }) => {
           {isSidebarOpen && <SideBar />}
         </div>
 
-        <div className="col-span-12 md:col-start-4 ">
+        <div className="col-span-12 px-6 md:col-start-4">
           {children}
         </div>
       </div>
