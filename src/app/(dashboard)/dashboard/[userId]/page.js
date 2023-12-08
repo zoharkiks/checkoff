@@ -61,7 +61,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="">
+    <div className="padding">
       {isOpen && <CreateNotes />}
 
       {notes.length > 0 && (
@@ -97,10 +97,11 @@ const Dashboard = () => {
               </div>
             </div>
           ) : (
-            <div className="grid h-full gap-5 mt-10 md:grid-cols-2 ">
+            <div className="grid gap-5 mt-10 md:grid-cols-2 ">
               {notes?.map((note, index) => (
                 <div className="h-full " key={note?.id || index}>
                   <SingleNote
+                  isCompleted={false}
                     favorite={note?.isFavorite}
                     id={note.id}
                     taskTitle={note?.taskName}
@@ -115,8 +116,6 @@ const Dashboard = () => {
           )}
         </>
       )}
-
-      
     </div>
   );
 };

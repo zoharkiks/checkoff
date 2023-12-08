@@ -43,3 +43,28 @@ export const fetchTags = async (setIsTagsLoading, setTags) => {
     setIsTagsLoading(false);
   }
 };
+
+export const handleDeleteNote = async (id) => {
+  try {
+    const response = await fetch("/api/delete-note", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        noteId: id,
+      }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      console.log("Note deleted:", data);
+      // Handle successful deletion (e.g., update UI or state)
+    } else {
+      console.error("Failed to delete note:", data.message);
+      // Handle errors (e.g., show error message to user)
+    }
+  } catch (error) {
+    console.error("Error deleting note:", error);
+  }
+};

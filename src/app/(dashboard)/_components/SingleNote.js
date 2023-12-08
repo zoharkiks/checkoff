@@ -4,6 +4,7 @@ import { getColorForPriority } from "@/app/utils/getColorForPriority";
 
 import React from "react";
 import { useAddNotesStore, useLoadingStore, useUserStore } from "../../store";
+import { handleDeleteNote } from "@/app/utils/fetchUtils";
 
 // TODO Add edit
 // TODO Add toast notifications
@@ -16,6 +17,7 @@ const SingleNote = ({
   dueDate,
   id,
   favorite,
+  isCompleted,
 }) => {
   const formattedDate = formatUserDate(dueDate);
   const priorityColorClass = getColorForPriority(selectedPriority);
@@ -76,7 +78,7 @@ const SingleNote = ({
   };
 
   return (
-    <div className="flex flex-col justify-center space-y-4 dark:text-white text-text-primary h-max rounded-xl padding bg-accent-secondary ">
+    <div className="flex flex-col justify-center h-full space-y-4 dark:text-white text-text-primary rounded-xl padding bg-accent-secondary ">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <Icon
@@ -90,12 +92,22 @@ const SingleNote = ({
           />
           <span className="mt-1 text-sm font-semibold">{formattedDate}</span>
         </div>
-        <Icon
-          onClick={handleFinishedToggle}
-          className="transition-colors cursor-pointer hover:text-green-600"
-          width={25}
-          icon={"fluent-mdl2:completed-solid"}
-        />
+
+        {isCompleted ? (
+          <Icon
+            onClick={()=>handleDeleteNote(id)}
+            className="transition-colors cursor-pointer hover:text-green-600"
+            width={25}
+            icon={"fluent:delete-24-regular"}
+          />
+        ) : (
+          <Icon
+            onClick={handleFinishedToggle}
+            className="transition-colors cursor-pointer hover:text-green-600"
+            width={25}
+            icon={"fluent-mdl2:completed-solid"}
+          />
+        )}
       </div>
 
       <h4 className="text-3xl font-bold capitalize ">{taskTitle}</h4>
