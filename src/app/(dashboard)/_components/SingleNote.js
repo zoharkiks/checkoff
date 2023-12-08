@@ -23,9 +23,10 @@ const SingleNote = ({
   const priorityColorClass = getColorForPriority(selectedPriority);
 
   // Accessing Zustand State
-  const [toggleFavorite, setNotes] = useUserStore((state) => [
+  const [toggleFavorite, setNotes, markNoteComplete] = useUserStore((state) => [
     state.toggleFavorite,
     state.setNotes,
+    state.markNoteComplete,
   ]);
 
   const [isLoading, setIsLoading] = useLoadingStore((state) => [
@@ -54,8 +55,9 @@ const SingleNote = ({
   };
 
   const handleFinishedToggle = async () => {
+    markNoteComplete(id)
     try {
-      const res = await fetch("/api/mark-finished", {
+      const response = await fetch("/api/mark-finished", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -65,10 +67,7 @@ const SingleNote = ({
           finished: true, // or false, depending on the desired state
         }),
       });
-
-      if (!response.ok) {
-        throw new Error("Failed to mark note as finished");
-      }
+      
     } catch (error) {
       console.error(
         "An error occurred while marking the note as finished:",

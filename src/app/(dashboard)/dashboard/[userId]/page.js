@@ -60,6 +60,13 @@ const Dashboard = () => {
     }
   }, []);
 
+  useEffect(() => {
+    console.log(notes);
+  
+   
+  }, [notes])
+  
+
   return (
     <div className="padding">
       {isOpen && <CreateNotes />}
