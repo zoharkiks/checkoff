@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   useAddNotesStore,
   useLoadingStore,
@@ -19,6 +19,9 @@ import SingleNote from "../../_components/SingleNote";
 import { Button } from "@/components/Button";
 
 const Dashboard = () => {
+
+
+  
   // Accessing Zustand State
   const [isOpen, setIsOpen] = useAddNotesStore((state) => [
     state.isOpen,
@@ -54,24 +57,19 @@ const Dashboard = () => {
   useEffect(() => {
     if (notes.length === 0) {
       fetchNotes(setIsLoading, setNotes, setCompletedNotes, "unfinished");
+
     }
     if (tags.length === 0) {
       fetchTags(setIsTagsLoading, setTags);
     }
   }, []);
 
-  useEffect(() => {
-    console.log(notes);
-  
-   
-  }, [notes])
-  
-
+ 
   return (
     <div className="padding">
       {isOpen && <CreateNotes />}
 
-      {notes.length > 0 && (
+      {notes?.length > 0 && (
         <div className="flex justify-end w-full">
           <Button
             icon="simple-line-icons:plus"

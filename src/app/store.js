@@ -51,26 +51,43 @@ export const useUserStore = create((set) => ({
     }));
   },
 
+  markNoteComplete: (noteId) =>
+    set((state) => {
+      // Find the note that is completed
+      const note = state.notes.find((note) => note.id === noteId);
+      if (!note) {
+        return; // Note not found, you might want to handle this case
+      }
+      // Remove the note from 'notes' array
+      const newNotes = state.notes.filter((note) => note.id !== noteId);
+      // Add the note to 'completedNotes' array
+      const newCompletedNotes = [note, ...state.completedNotes];
+      return {
+        ...state,
+        notes: newNotes,
+        completedNotes: newCompletedNotes,
+      };
+    }),
 
-  markNoteComplete: (noteId) => set((state) => {
-    // Find the note that is completed
-    const note = state.notes.find((note) => note.id === noteId);
-    if (!note) {
-      return; // Note not found, you might want to handle this case
-    }
-    // Remove the note from 'notes' array
-    const newNotes = state.notes.filter((note) => note.id !== noteId);
-    // Add the note to 'completedNotes' array
-    const newCompletedNotes = [note,...state.completedNotes];
-    return {
-      ...state,
-      notes: newNotes,
-      completedNotes: newCompletedNotes,
-    };
-  }),
+  deleteNote: (noteId) =>
+    set((state) => {
+      // Find the note that user wants to delete from 'completed notes' array
+      const note = state.completedNotes.find((note) => note.id === noteId);
+      if (!note) {
+        return;
+      }
+      // Remove the note from 'completed notes' array
+      const newCompletedNotes = state.completedNotes.filter(
+        (note) => note.id !== noteId
+      );
+      // Add the note to 'completed notes' array
 
+      return {
+        ...state,
+        completedNotes: newCompletedNotes,
+      };
+    }),
 
-  
   setTags: (tags) => set({ tags }),
   toggleFavorite: (noteId) =>
     set((state) => ({

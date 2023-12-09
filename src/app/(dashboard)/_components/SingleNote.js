@@ -23,10 +23,11 @@ const SingleNote = ({
   const priorityColorClass = getColorForPriority(selectedPriority);
 
   // Accessing Zustand State
-  const [toggleFavorite, setNotes, markNoteComplete] = useUserStore((state) => [
+  const [toggleFavorite, setNotes, markNoteComplete,deleteNote] = useUserStore((state) => [
     state.toggleFavorite,
     state.setNotes,
     state.markNoteComplete,
+    state.deleteNote,
   ]);
 
   const [isLoading, setIsLoading] = useLoadingStore((state) => [
@@ -94,7 +95,7 @@ const SingleNote = ({
 
         {isCompleted ? (
           <Icon
-            onClick={()=>handleDeleteNote(id)}
+            onClick={()=>handleDeleteNote(id,deleteNote)}
             className="transition-colors cursor-pointer hover:text-green-600"
             width={25}
             icon={"fluent:delete-24-regular"}

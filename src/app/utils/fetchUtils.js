@@ -1,3 +1,7 @@
+
+
+
+
 export const fetchNotes = async (
   setIsLoading,
   setNotes,
@@ -44,7 +48,9 @@ export const fetchTags = async (setIsTagsLoading, setTags) => {
   }
 };
 
-export const handleDeleteNote = async (id) => {
+export const handleDeleteNote = async (id,deleteNote) => {
+  
+  deleteNote(id)
   try {
     const response = await fetch("/api/delete-note", {
       method: "DELETE",

@@ -5,6 +5,7 @@ import { Button } from "../../../components/Button";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { useSidebarStore } from "../../store";
+import ThemeSelector from "@/components/ThemeSelector";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
@@ -21,7 +22,8 @@ const Navbar = () => {
         <span className="logo">CheckOff</span>
       </Link>
 
-      {status === "authenticated" ? (
+<div className="flex items-center justify-center space-x-4">
+{status === "authenticated" ? (
         <div className="flex space-x-4">
           <Link
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -30,7 +32,7 @@ const Navbar = () => {
             <Button intent='ghost' >Enter CheckOff</Button>
           </Link>
 
-          <Button onClick={() => signOut({ callbackUrl: "/" })}>Log Out</Button>
+          {/* <Button onClick={() => signOut({ callbackUrl: "/" })}>Log Out</Button> */}
         </div>
       ) : (
         <div className="flex space-x-4">
@@ -43,6 +45,10 @@ const Navbar = () => {
           </Link>
         </div>
       )}
+
+      <ThemeSelector/>
+</div>
+      
     </nav>
   );
 };

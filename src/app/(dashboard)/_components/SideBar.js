@@ -7,10 +7,10 @@ import { Icon } from "@iconify/react";
 import { getMenuItems } from "../../utils/menuItems";
 import { setUserPreferenceTheme, toggleTheme } from "../../utils/setTheme";
 import { Button } from "@/components/Button";
+import ThemeSelector from "@/components/ThemeSelector";
 
 const SideBar = () => {
   // TODO Smooth out light and dark animation on switch
-  // TODO Add SignOut
   // TODO Separate component for  Theme Toggle
 
   // Accessing Zustand States
@@ -18,38 +18,6 @@ const SideBar = () => {
     state.isSidebarOpen,
     state.setIsSidebarOpen,
   ]);
-
-  const [theme, setTheme] = useThemeStore((state) => [
-    state.theme,
-    state.setTheme,
-  ]);
-
-  // // Function to toggle between light and dark themes
-  // const toggleTheme = (themeName) => {
-  //   setTheme(themeName);
-  // };
-
-  // useEffect(() => {
-  //   document.documentElement.setAttribute("data-theme", theme);
-  // }, [theme]);
-
-  // Add user preference theme to the app
-  useEffect(() => {
-    const prefersDarkMode = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    const initialTheme = theme || (prefersDarkMode ? "dark" : "light");
-    // Set the data-theme attribute based on the user's system preference
-    document.documentElement.setAttribute("data-theme", initialTheme);
-    setTheme(initialTheme);
-  }, []);
-
-  // Update the data-theme attribute whenever the theme state changes
-  useEffect(() => {
-    if (theme) {
-      document.documentElement.setAttribute("data-theme", theme);
-    }
-  }, [theme]);
 
   const { data: session } = useSession();
   const menuItems = getMenuItems(session?.user?.id);
@@ -89,12 +57,12 @@ const SideBar = () => {
               </div>
             </div>
 
-              <Button
-                intent="secondary"
-                onClick={() => signOut({ callbackUrl: "/" })}
-              >
-                Log Out
-              </Button>
+            <Button
+              intent="secondary"
+              onClick={() => signOut({ callbackUrl: "/" })}
+            >
+              Log Out
+            </Button>
           </div>
         </div>
 
@@ -117,28 +85,7 @@ const SideBar = () => {
           </div>
         </div>
 
-        <div className="flex justify-center w-full">
-          <div className="flex p-2 mt-3 space-x-2 rounded-lg bg-surface-tertiary w-max">
-            <div
-              onClick={() => toggleTheme("light", setTheme)}
-              className={`flex items-center px-3 py-1 space-x-1 rounded-lg cursor-pointer ${
-                theme === "light" && "mode-active-light"
-              }`}
-            >
-              <Icon icon={"iconamoon:mode-light-light"} />
-              <span>Light</span>
-            </div>
-            <div
-              onClick={() => toggleTheme("dark", setTheme)}
-              className={`flex items-center px-3 py-1 space-x-1 rounded-lg cursor-pointer ${
-                theme === "dark" && "mode-active-dark"
-              }`}
-            >
-              <Icon icon={"iconamoon:mode-dark-light"} />
-              <span>Dark</span>
-            </div>
-          </div>
-        </div>
+        <ThemeSelector />
       </div>
     </div>
   );
