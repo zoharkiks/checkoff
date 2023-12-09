@@ -41,7 +41,7 @@ const SideBar = () => {
         </div>
 
         <div className="flex items-center justify-center md:justify-start">
-          <div className="flex flex-col items-center justify-center gap-2 p-2 mt-6 border w-max rounded-xl ">
+          <div className="flex flex-col items-center justify-center gap-2 p-4 mt-6 border min-w-max rounded-xl ">
             {/* profile pic */}
             {/* User Data */}
             <div className="flex space-x-4">
@@ -57,12 +57,6 @@ const SideBar = () => {
               </div>
             </div>
 
-            <Button
-              intent="secondary"
-              onClick={() => signOut({ callbackUrl: "/" })}
-            >
-              Log Out
-            </Button>
           </div>
         </div>
 
@@ -75,7 +69,12 @@ const SideBar = () => {
 
           <div className="flex flex-col py-4 space-y-2 ">
             {menuItems.map((item) => (
-              <Link key={item.id} className="" href={item.link}>
+              <Link
+                key={item.id}
+                className=""
+                href={item.link}
+                onClick={item.onClick ? () => item.onClick() : null}
+              >
                 <div className="flex items-center px-4 py-4 space-x-4 rounded-lg menuItem">
                   <Icon className="text-2xl" icon={item.icon} />
                   <span>{item.label}</span>

@@ -20,7 +20,7 @@ const setUserPreferenceTheme = (theme, setThemeCallback) => {
     // If there's an existing theme set by the user, use that instead
     document.documentElement.setAttribute("data-theme", theme);
     setThemeCallback(theme);
-  }
+  } 
 };
 
 export { toggleTheme, setUserPreferenceTheme };

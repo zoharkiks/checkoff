@@ -1,3 +1,5 @@
+import { signOut } from "next-auth/react";
+
 export const getMenuItems = (userId) => [
   {
     id: "1",
@@ -25,5 +27,13 @@ export const getMenuItems = (userId) => [
     label: "Settings",
     icon: "mingcute:settings-3-line",
     link: `/dashboard/${userId}/settings`,
+  },
+
+  {
+    id: "5",
+    label: "Log Out",
+    icon: "mdi:logout",
+    link: `/dashboard/${userId}/settings`,
+    onClick: () => signOut(),
   },
 ];

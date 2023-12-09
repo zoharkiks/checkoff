@@ -11,6 +11,8 @@ const ThemeSelector = () => {
     state.setTheme,
   ]);
 
+
+  
     // Add user preference theme to the app
     useEffect(() => {
         const prefersDarkMode = window.matchMedia(
