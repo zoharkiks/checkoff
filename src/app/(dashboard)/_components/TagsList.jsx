@@ -61,9 +61,7 @@ const TagsList = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(tags);
-  }, [tags]);
+ 
 
   return (
     <div className="absolute p-4 text-white border rounded-lg -top-10 left-10 bg-brand-secondary border-accent-primary">

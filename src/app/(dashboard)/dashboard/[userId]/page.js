@@ -64,7 +64,6 @@ const Dashboard = () => {
 
     }
 
-    console.log(notes);
 
   }, []);
 
