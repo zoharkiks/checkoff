@@ -41,29 +41,26 @@ const CompletedNotes = () => {
 
   useSidebar(setIsSidebarOpen);
 
+
   useEffect(() => {
-    if (completedNotes.length === 0) {
-      fetchNotes(setIsLoading,setNotes, setCompletedNotes, "finished");
+    if (completedNotes.length === 0 ) {
+      fetchNotes(setIsLoading, setNotes, setCompletedNotes, "finished");
     }
-    console.log(completedNotes);
   }, []);
 
   return (
-    <div className="padding">
+    <div className="padding ">
       <h3 className="text-2xl font-bold">List Of All The Completed Notes</h3>
 
       {isLoading ? (
-        <div className="flex flex-col items-center justify-center h-screen ">
+        <div className="flex mt-10 h-scree ">
           <span>Loading</span>
         </div>
       ) : (
         <>
           {completedNotes.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-screen ">
-              <div className="flex-col">
-                <p> No Completed Tasks Found 👍</p>
-                
-              </div>
+            <div className="flex mt-10 ">
+              <p className=""> No Completed Tasks Found 👍</p>
             </div>
           ) : (
             <div className="grid gap-5 mt-10 md:grid-cols-2 ">

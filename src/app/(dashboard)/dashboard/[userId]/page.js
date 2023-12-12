@@ -67,18 +67,8 @@ const Dashboard = () => {
  
   return (
     <div className="padding">
-      {isOpen && <CreateNotes />}
 
-      {notes?.length > 0 && (
-        <div className="flex justify-end w-full">
-          <Button
-            icon="simple-line-icons:plus"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            New Task
-          </Button>
-        </div>
-      )}
+      
 
       {isLoading ? (
         <div className="flex flex-col items-center justify-center h-screen ">
