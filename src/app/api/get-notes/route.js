@@ -4,6 +4,7 @@ import { connectPrisma } from "@/app/utils";
 import { getSession, useSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
+export const dynamic = 'force-dynamic';
 
 /**
  * Retrieves the user's notes from the database and returns them as a JSON response.
@@ -25,8 +26,7 @@ export const GET = async (req, res) => {
     //  // Extract the query parameter
     const url = new URL(req.url);
     const status = url.searchParams.get("status");
-    const isFinished = status === 'finished';
-
+    const isFinished = status === "finished";
 
     // Retrieve the user's notes from the database
     const usersWithNotes = await prisma.users.findUnique({
@@ -35,9 +35,11 @@ export const GET = async (req, res) => {
       },
       include: {
         notes: {
-          where: status ? {
-            isFinished: isFinished,
-          } : {},
+          where: status
+            ? {
+                isFinished: isFinished,
+              }
+            : {},
           orderBy: {
             createdAt: "desc",
           },
@@ -47,7 +49,10 @@ export const GET = async (req, res) => {
     });
 
     // Return the user's notes as a JSON response
-    return NextResponse.json({ usersWithNotes }, { status: 200 });
+    return NextResponse.json(
+      { message: "Notes retrieved", usersWithNotes },
+      { status: 200 }
+    );
   } catch (error) {
     console.log(error);
   } finally {
