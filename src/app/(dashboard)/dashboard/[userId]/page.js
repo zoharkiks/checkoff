@@ -61,8 +61,15 @@ const Dashboard = () => {
     }
     if (tags.length === 0) {
       fetchTags(setIsTagsLoading, setTags);
+
     }
+
+    console.log(notes);
+
   }, []);
+
+ 
+  
 
  
   return (

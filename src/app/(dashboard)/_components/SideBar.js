@@ -36,7 +36,7 @@ const SideBar = () => {
             <span className="logo">CheckOff</span>
           </Link>
           <span className="text-sm font-medium">
-            Turning To-Do's into Ta-Da's
+            Turning To-Do&apos;s into Ta-Da&apos;s
           </span>
         </div>
 

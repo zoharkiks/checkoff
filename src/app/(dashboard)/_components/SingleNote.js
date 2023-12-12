@@ -2,12 +2,13 @@ import { Icon } from "@iconify/react";
 import { formatUserDate } from "@/app/utils/formatUserDate";
 import { getColorForPriority } from "@/app/utils/getColorForPriority";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useAddNotesStore, useLoadingStore, useUserStore } from "../../store";
 import { handleDeleteNote } from "@/app/utils/fetchUtils";
 
 // TODO Add edit
 // TODO Add toast notifications
+// Fix Key prop value
 
 const SingleNote = ({
   taskTitle,
@@ -23,12 +24,14 @@ const SingleNote = ({
   const priorityColorClass = getColorForPriority(selectedPriority);
 
   // Accessing Zustand State
-  const [toggleFavorite, setNotes, markNoteComplete,deleteNote] = useUserStore((state) => [
-    state.toggleFavorite,
-    state.setNotes,
-    state.markNoteComplete,
-    state.deleteNote,
-  ]);
+  const [toggleFavorite, setNotes, markNoteComplete, deleteNote] = useUserStore(
+    (state) => [
+      state.toggleFavorite,
+      state.setNotes,
+      state.markNoteComplete,
+      state.deleteNote,
+    ]
+  );
 
   const [isLoading, setIsLoading] = useLoadingStore((state) => [
     state.isLoading,
@@ -56,7 +59,7 @@ const SingleNote = ({
   };
 
   const handleFinishedToggle = async () => {
-    markNoteComplete(id)
+    markNoteComplete(id);
     try {
       const response = await fetch("/api/mark-finished", {
         method: "PATCH",
@@ -68,7 +71,6 @@ const SingleNote = ({
           finished: true, // or false, depending on the desired state
         }),
       });
-      
     } catch (error) {
       console.error(
         "An error occurred while marking the note as finished:",
@@ -95,7 +97,7 @@ const SingleNote = ({
 
         {isCompleted ? (
           <Icon
-            onClick={()=>handleDeleteNote(id,deleteNote)}
+            onClick={() => handleDeleteNote(id, deleteNote)}
             className="transition-colors cursor-pointer hover:text-green-600"
             width={25}
             icon={"fluent:delete-24-regular"}
@@ -115,8 +117,11 @@ const SingleNote = ({
       <h5 className="text-xl font-bold capitalize ">{taskDesc}</h5>
 
       {selectedTags.length > 0 ? (
-        selectedTags.map((tag) => (
-          <div className="px-2 bg-red-300 rounded-xl w-min text-text-primary">
+        selectedTags.map((tag, i) => (
+          <div
+            key={tag}
+            className="px-2 bg-red-300 rounded-xl w-min text-text-primary"
+          >
             {tag}
           </div>
         ))
