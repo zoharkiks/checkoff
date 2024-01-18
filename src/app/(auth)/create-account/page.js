@@ -87,7 +87,7 @@ const CreateAccount = () => {
           <span className="font-bold logo">CheckOff</span>
         </Link>
       </div>
-      <div className="grid place-items-center ">
+      <div className="grid mt-10 place-items-center ">
         <h1 className="text-3xl font-medium md:text-4xl">
           You are in for a ride{" "}
         </h1>
