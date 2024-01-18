@@ -53,7 +53,7 @@ const CompletedNotes = () => {
       <h3 className="text-2xl font-bold">List Of All The Completed Notes</h3>
 
       {isLoading ? (
-        <div className="flex mt-10 h-scree ">
+        <div className="flex mt-10 ">
           <span>Loading</span>
         </div>
       ) : (
