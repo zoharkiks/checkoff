@@ -34,7 +34,7 @@ export const POST = async (req) => {
       { status: "200" }
     );
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return NextResponse.json(
       { message: "An error occurred creating your Tag", error },
       { status: "500" }

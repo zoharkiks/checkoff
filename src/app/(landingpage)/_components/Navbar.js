@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React from "react";
 import { Button } from "../../../components/Button";
@@ -22,33 +22,28 @@ const Navbar = () => {
         <span className="logo">CheckOff</span>
       </Link>
 
-<div className="flex items-center justify-center space-x-4">
-{status === "authenticated" ? (
-        <div className="flex space-x-4">
-          <Link
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            href={`dashboard/${session?.user?.id}`}
-          >
-            <Button intent='ghost' >Enter CheckOff</Button>
-          </Link>
+      <div className="flex items-center justify-center space-x-2">
+        {status === "authenticated" ? (
+          <div className="flex space-x-4">
+            <Link
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+              href={`dashboard/${session?.user?.id}`}
+            >
+              <Button intent="ghost">Enter CheckOff</Button>
+            </Link>
 
-          {/* <Button onClick={() => signOut({ callbackUrl: "/" })}>Log Out</Button> */}
-        </div>
-      ) : (
-        <div className="flex space-x-4">
-          <Link href="/login">
-            <Button intent="ghost">Log In</Button>
-          </Link>
+            {/* <Button onClick={() => signOut({ callbackUrl: "/" })}>Log Out</Button> */}
+          </div>
+        ) : (
+          <div className="flex">
+            <Link href="/login">
+              <Button intent="ghost">Log In</Button>
+            </Link>
+          </div>
+        )}
 
-          <Link href="/create-account">
-            <Button intent="secondary">Get CheckOff Free</Button>
-          </Link>
-        </div>
-      )}
-
-      <ThemeSelector/>
-</div>
-      
+        <ThemeSelector />
+      </div>
     </nav>
   );
 };

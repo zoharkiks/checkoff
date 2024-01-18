@@ -34,7 +34,7 @@ const ThemeSelector = () => {
 
   return (
     <div className="flex items-center justify-center ">
-      <div className="flex p-2 space-x-2 rounded-lg bg-surface-tertiary w-max">
+      <div className="flex p-1 border rounded-lg border-gray p- bg-surface-tertiary w-max">
         <div
           onClick={() => toggleTheme("light", setTheme)}
           className={`flex items-center px-3 py-1 space-x-1 rounded-lg cursor-pointer ${

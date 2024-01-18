@@ -57,7 +57,7 @@ const TagsList = () => {
       fetchTags(setIsTagsLoading, setTags);
       newTagRef.current.value = "";
     } catch (error) {
-      console.log("error in tag");
+      // console.log("error in tag");
     }
   };
 

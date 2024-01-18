@@ -35,7 +35,7 @@ export const authOptions = {
 
           return user;
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         } finally {
           await prisma.$disconnect();
         }
