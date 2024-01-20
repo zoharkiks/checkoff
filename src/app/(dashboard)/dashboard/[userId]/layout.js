@@ -29,7 +29,7 @@ const DashboardLayout = ({ children }) => {
   ]);
 
   return (
-    <div className=" text-text-primary bg-surface-primary">
+    <div className="min-h-screen text-text-primary bg-surface-primary">
       {isOpen && <CreateNotes />}
 
       <div className="flex items-center padding md:p-4">

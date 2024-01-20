@@ -18,6 +18,24 @@ const SideBar = () => {
     state.isSidebarOpen,
     state.setIsSidebarOpen,
   ]);
+  
+
+  useEffect(() => {
+    if (isSidebarOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    // This is the cleanup function that React will run when
+    // the component unmounts or before running the effect again.
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isSidebarOpen]); // This effect runs only when `isSidebarOpen` changes.
+
+
+  
 
   const { data: session } = useSession();
   const menuItems = getMenuItems(session?.user?.id);

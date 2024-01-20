@@ -77,7 +77,7 @@ const Dashboard = () => {
       
 
       {isLoading ? (
-        <div className="flex flex-col items-center justify-center ">
+        <div className="flex flex-col items-center justify-center min-h-screen">
           <span>Loading</span>
         </div>
       ) : (
